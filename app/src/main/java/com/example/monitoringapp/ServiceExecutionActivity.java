@@ -1,6 +1,8 @@
 package com.example.monitoringapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.monitoringapp.Adapter.ServiceAdapter;
 import com.example.monitoringapp.Adapter.SpinnerAdapter;
 import com.example.monitoringapp.databinding.ActivityServiceExecutionBinding;
 
@@ -29,6 +32,11 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         spinner1 = binding.serviceExecutionSpinner1;
         spinner2 = binding.serviceExecutionSpinner2;
+
+        // 7. 리사이클러뷰 가져오기
+        RecyclerView recyclerView = binding.serviceExecutionRecyclerview;
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         final ArrayList<String> items1 = new ArrayList<String>();
         items1.add("전체 보기");
@@ -79,5 +87,13 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "아이템을 선택해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        ArrayList<ServiceItem> dataList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            dataList.add(new ServiceItem("2021-01-05", "14:31:37", "에넥스텔레콤", "MVNO 자동충전 서비스", "정상"));
+        }
+        ServiceAdapter serviceAdapter = new ServiceAdapter(dataList);
+        recyclerView.setAdapter(serviceAdapter);
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

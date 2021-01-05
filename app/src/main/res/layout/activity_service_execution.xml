@@ -43,9 +43,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/service_execution_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
