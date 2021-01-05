@@ -1,4 +1,4 @@
-package com.example.monitoringapp;
+package com.example.monitoringapp.Adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -21,13 +21,10 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View v = super.getView(position, convertView, parent);
         if (position == getCount()) {
-            ((TextView) v.findViewById(R.id.item_spinner_tv)).setText("");
-            ((TextView) v.findViewById(R.id.item_spinner_tv)).setHint(getItem(getCount()));
-//            ((TextView) v.findViewById(android.R.id.))
-//            //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-//            (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
-//            //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-//            (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
+            // 마지막 포지션의 textView 를 힌트 용으로 사용
+            ((TextView) v.findViewById(android.R.id.text1)).setText("");
+            // 아이템의 마지막 값을 불러와 hint로 추가
+            ((TextView) v.findViewById(android.R.id.text1)).setHint(getItem(getCount()));
         }
         return v;
     }

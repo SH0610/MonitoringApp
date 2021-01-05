@@ -27,28 +27,24 @@
         <Spinner
             android:id="@+id/service_execution_spinner1"
             android:spinnerMode="dialog"
-            android:background="@drawable/spinner_background"
-            android:paddingVertical="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.45" />
+            android:layout_height="30dp"
+            android:layout_weight="0.47" />
 
         <Spinner
             android:id="@+id/service_execution_spinner2"
             android:spinnerMode="dialog"
-            android:paddingVertical="10dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.45" />
+            android:layout_height="30dp"
+            android:layout_weight="0.47" />
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
 
 
     </LinearLayout>
