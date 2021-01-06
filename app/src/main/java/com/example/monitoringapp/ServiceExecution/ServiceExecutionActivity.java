@@ -1,17 +1,22 @@
-package com.example.monitoringapp;
+package com.example.monitoringapp.ServiceExecution;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.monitoringapp.Adapter.ServiceAdapter;
-import com.example.monitoringapp.Adapter.SpinnerAdapter;
+import com.example.monitoringapp.ServiceExecution.Adapter.ServiceAdapter;
+import com.example.monitoringapp.ServiceExecution.Adapter.SpinnerAdapter;
 import com.example.monitoringapp.databinding.ActivityServiceExecutionBinding;
 
 import java.util.ArrayList;
@@ -29,6 +34,11 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         binding = ActivityServiceExecutionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+
+
 
         spinner1 = binding.serviceExecutionSpinner1;
         spinner2 = binding.serviceExecutionSpinner2;

@@ -1,4 +1,4 @@
-package com.example.monitoringapp.Adapter;
+package com.example.monitoringapp.ServiceExecution.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.monitoringapp.R;
-import com.example.monitoringapp.ServiceItem;
+import com.example.monitoringapp.ServiceExecution.ServiceItem;
 
 import java.util.ArrayList;
 
