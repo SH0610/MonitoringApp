@@ -25,8 +25,9 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
-//    String[] items = {"모은넷", "에넥스텔레콤", "ACN코리아", "한국케이블텔레콤"};
-//    String[] items2 = {"전체 보기", "MVNO 자동충전 서비스", "MVNO 일차감 서버", "MVNO ARS 충전/잔액 연동 서비스", "서비스 선택"};
+
+    public static ArrayList<String> items1 = new ArrayList<String>();
+    public static ArrayList<String> items2 = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
-
-
         spinner1 = binding.serviceExecutionSpinner1;
         spinner2 = binding.serviceExecutionSpinner2;
 
@@ -48,7 +47,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        final ArrayList<String> items1 = new ArrayList<String>();
+//        final ArrayList<String> items1 = new ArrayList<String>();
         items1.add("전체 보기");
         items1.add("모은넷");
         items1.add("에넥스텔레콤");
@@ -56,12 +55,12 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         items1.add("한국케이블텔레콤");
         items1.add("거래처 선택"); // Last item
 
-        final ArrayList<String> items2 = new ArrayList<String>();
-        items2.add("전체 보기");
-        items2.add("MVNO 자동충전 서비스");
-        items2.add("MVNO 일차감 서버");
-        items2.add("MVNO ARS 충전/잔액 연동 서비스");
-        items2.add("서비스 선택"); // Last item
+//        final ArrayList<String> items2 = new ArrayList<String>();
+//        items2.add("전체 보기");
+//        items2.add("MVNO 자동충전 서비스");
+//        items2.add("MVNO 일차감 서버");
+//        items2.add("MVNO ARS 충전/잔액 연동 서비스");
+//        items2.add("서비스 선택"); // Last item
 
         SpinnerAdapter adapter1 = new SpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, items1);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
