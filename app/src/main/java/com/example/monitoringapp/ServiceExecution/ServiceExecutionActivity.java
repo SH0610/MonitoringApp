@@ -48,12 +48,12 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 //        final ArrayList<String> items1 = new ArrayList<String>();
-        items1.add("전체 보기");
-        items1.add("모은넷");
-        items1.add("에넥스텔레콤");
-        items1.add("ACN코리아");
-        items1.add("한국케이블텔레콤");
-        items1.add("거래처 선택"); // Last item
+//        items1.add("전체 보기");
+//        items1.add("모은넷");
+//        items1.add("에넥스텔레콤");
+//        items1.add("ACN코리아");
+//        items1.add("한국케이블텔레콤");
+//        items1.add("거래처 선택"); // Last item
 
 //        final ArrayList<String> items2 = new ArrayList<String>();
 //        items2.add("전체 보기");
