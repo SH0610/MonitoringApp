@@ -19,30 +19,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_number_toolbar"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="10sp"
+            android:text="거래처 선택"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_number_toolbar"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="10sp"
+            android:text="서비스 선택"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp" >
+        android:layout_marginBottom="10dp" >
 
         <Spinner
             android:id="@+id/service_execution_spinner1"
             android:spinnerMode="dialog"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight="0.47" />
+            android:layout_weight="0.3" />
 
         <Spinner
             android:id="@+id/service_execution_spinner2"
             android:spinnerMode="dialog"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_weight="0.47" />
+            android:layout_weight="0.3" />
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/service_execution_btn"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_button"
+        android:layout_marginHorizontal="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="12sp"
+        android:text="조회하기" />
+
     <LinearLayout
+        android:layout_marginTop="7dp"
         android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
