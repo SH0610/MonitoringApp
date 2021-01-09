@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ServiceExecution;
+package com.example.monitoringapp.ServiceExecution.Model;
 
 public class ServiceItem {
     // 4. 아이템 정의

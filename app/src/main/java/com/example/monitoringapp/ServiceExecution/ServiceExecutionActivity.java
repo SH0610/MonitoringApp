@@ -45,10 +45,8 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private ArrayList<String> item_accountSearchCode = new ArrayList<String>();
 
-    private ArrayList<String> accountList = new ArrayList<String>();
-
-    private String selectedAccount; // 선택된 대리점 이름
-    private String selectedService; // 선택된 서비스 이름
+//    private String selectedAccount; // 선택된 대리점 이름
+//    private String selectedService; // 선택된 서비스 이름
 
     StringBuffer stringBuffer = new StringBuffer();
 //    StringBuffer stringBuffer2 = new StringBuffer();
@@ -60,7 +58,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     public static String se_AGNM; // 대리점이름
 
     public static String se_SVCCD; // 서비스코드
-    public static String se_SVCNM; // 서비스명
+    public static String se_SVCNM = ""; // 서비스명
     public static String se_RESULT; // 결과
     public static String se_UPDDT; // 수정일자
     public static String se_UPDTM; // 수정시간
@@ -164,17 +162,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 //            JSONObject object2 = jsonArray2.getJSONObject(1); // body
             // index 0 : anx, index 1 : apl, index 2:
 
-            // 거래처 목록 저장
-            for (int i = 0; i < jsonArray2.length(); i++) {
-                JSONObject object2 = jsonArray2.getJSONObject(i); // body
-                String test3 = object2.getString("AGCD"); // 필요한 데이터
-                accountList.add(test3);
-            }
-            System.out.println("일단 테스트");
-            for (int i = 0; i < accountList.size(); i++) {
-                System.out.println(accountList.get(i));
-            }
-
             item_accountSearch.add("전체 보기");
             for (int i = 0; i < jsonArray2.length(); i++) {
                 item_accountSearch.add(jsonArray2.getJSONObject(i).getString("AGNM"));
@@ -214,7 +201,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
 
-        ServiceSearchConnection.getServiceSearch(se_AGCD);
+        ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
 
 
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch);
@@ -222,32 +209,34 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), item_accountSearch.get(i) + " 선택됨", Toast.LENGTH_SHORT).show();
 
-                se_AGCD = item_accountSearchCode.get(i); // 선택된 대리점 코드
+                if (i == 0) {
+                    se_AGCD = "";
+                }
+                else {
+                    se_AGCD = item_accountSearchCode.get(i); // 선택된 대리점 코드
+                }
                 System.out.println("선택된 대리점 코드 : " + se_AGCD);
-
-                selectedAccount = item_accountSearch.get(i);
-                System.out.println("선택된 대리점 : " + selectedAccount);
 
                 // 서비스 조회 스피너
                 spinner2 = binding.serviceExecutionSpinner2;
 
                 clicked = true;
-                ServiceSearchConnection.getServiceSearch(se_AGCD);
+                ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
 
-//                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner2.setAdapter(adapter2);
-
 
                 spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(getApplicationContext(), item_serviceSearch.get(i) + " 선택됨", Toast.LENGTH_SHORT).show();
-                        selectedService = item_serviceSearch.get(i);
-                        System.out.println("선택된 서비스 : " + selectedService);
-                        System.out.println("호출 + 선택된서비스");
+
+                        if (item_serviceSearch.get(i) == "전체 보기") {
+                            se_SVCNM = "";
+                        } else {
+                            se_SVCNM = item_serviceSearch.get(i);
+                        }
+                        System.out.println("선택된 서비스 : " + se_SVCNM);
                     }
 
                     @Override
@@ -263,30 +252,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             }
         });
 
-//        // 서비스 조회 스피너
-//        spinner2 = binding.serviceExecutionSpinner2;
-//
-////                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch);
-//        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner2.setAdapter(adapter2);
-//
-//
-//        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getApplicationContext(), item_serviceSearch.get(i) + " 선택됨", Toast.LENGTH_SHORT).show();
-//                selectedService = item_serviceSearch.get(i);
-//                System.out.println("선택된 서비스 : " + selectedService);
-//                System.out.println("호출 + 선택된서비스");
-////                item_serviceSearch.add("전체 보기");
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                Toast.makeText(getApplicationContext(), "아이템을 선택해주세요.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         // 7. 리사이클러뷰 가져오기
         final RecyclerView recyclerView = binding.serviceExecutionRecyclerview;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -296,9 +261,10 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicked = true;
+                clicked = false;
 
-                ServiceSearchConnection.getServiceSearch(se_AGCD);
+                System.out.println("버튼 클릭 시의 AGCD : " + se_AGCD);
+                ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
                 ServiceAdapter serviceAdapter = new ServiceAdapter(dataList);
                 recyclerView.setAdapter(serviceAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();

@@ -2,7 +2,7 @@ package com.example.monitoringapp.ServiceExecution.Connection;
 
 import android.util.Log;
 
-import com.example.monitoringapp.ServiceExecution.ServiceItem;
+import com.example.monitoringapp.ServiceExecution.Model.ServiceItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,16 +17,14 @@ import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.clicked;
-import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.forTest;
 import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.item_serviceSearch;
-import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.se_AGCD;
 
 public class ServiceSearchConnection {
 
     private static String accountSearchData;
     public static ArrayList<ServiceItem> dataList = new ArrayList<>();
 
-    public static void getServiceSearch(String AGCD) {
+    public static void getServiceSearch(String AGCD, String SVCNM) {
         System.out.println("호출 선택");
         URL url = null;
         HttpURLConnection conn_Url = null;
@@ -64,12 +62,13 @@ public class ServiceSearchConnection {
 
             if (clicked) {
                 // 거래처 선택되면
-                System.out.println("거래처 선택완료");
-                jBObj_send2.put("AGCD", AGCD);
+                System.out.println("거래처 선택ㄴ");
+                jBObj_send2.put("AGCD", "");
                 jBObj_send2.put("SVCCD", "");
 
             } else {
-                jBObj_send2.put("AGCD", "");
+                System.out.println("거래처 선택완료");
+                jBObj_send2.put("AGCD", AGCD);
                 jBObj_send2.put("SVCCD", "");
             }
 
@@ -132,40 +131,53 @@ public class ServiceSearchConnection {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-            JSONObject object2 = jsonArray2.getJSONObject(0); // body
+//            JSONObject object2 = jsonArray2.getJSONObject(0); // body
+            JSONObject object2 = null; // body
 
-//            item_serviceSearch.add("전체 보기");
-            System.out.println("fortest" + forTest);
+            if (jsonArray2.length() == 0) {
+                dataList.clear();
+                dataList.add(new ServiceItem("", "", "", "서비스가 없습니다.", ""));
+            }
+            else {
+                object2 = jsonArray2.getJSONObject(0); // body
+                dataList.clear();
+                for (int i = 0; i < jsonArray2.length(); i++) {
+                    if (jsonArray2.getJSONObject(i).getString("SVCNM").equals(SVCNM)) { // 서비스 필터링
+                        dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
+                    }
+                    else if (SVCNM.equals("")){ // 전체 보기
+                        dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
+                    }
+                }
+            }
+
+
+            item_serviceSearch.clear();
+            item_serviceSearch.add("전체 보기");
             for (int i = 0; i < jsonArray2.length(); i++) {
-                if (jsonArray2.getJSONObject(i).getString("AGCD").equals(forTest)) {
+                if (jsonArray2.getJSONObject(i).getString("AGCD").equals(AGCD)) {
                     System.out.println("testok  " + jsonArray2.getJSONObject(i).getString("SVCNM"));
                     item_serviceSearch.add(jsonArray2.getJSONObject(i).getString("SVCNM"));
                 }
-
             }
-
-            for (int i = 0; i < jsonArray2.length(); i++) {
-                dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
-            }
-
 
             System.out.println("jsonarray1 길이service " + jsonArray1.length());
             System.out.println("jsonarray2 길이service " + jsonArray2.length());
 
             System.out.println("jsonobject1 길이service " + object1.length());
-            System.out.println("jsonobject2 길이service " + object2.length());
+//            System.out.println("jsonobject2 길이service " + object2.length());
 
             String test1 = object1.getString("TYPE");
             String test2 = object1.getString("RETURNCD");
 
-            String test3 = object2.getString("AGCD");
-
-            String test4 = object2.getString("AGNM"); // 필요한 데이터
-
-            System.out.println(test1); // type : 01
-            System.out.println(test2); // returncd : 00
-            System.out.println(test3); // agcd : anx
-            System.out.println(test4); // agnm : 에넥스텔레콤
+//            String test3 = object2.getString("AGCD");
+//
+//            String test4 = object2.getString("AGNM"); // 필요한 데이터
+//
+//            System.out.println(test1); // type : 01
+//            System.out.println(test2); // returncd : 00
+//            System.out.println(test3); // agcd : anx
+//            System.out.println(test4); // agnm : 에넥스텔레콤
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();

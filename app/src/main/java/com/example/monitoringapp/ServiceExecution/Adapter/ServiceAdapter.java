@@ -1,5 +1,6 @@
 package com.example.monitoringapp.ServiceExecution.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.monitoringapp.R;
-import com.example.monitoringapp.ServiceExecution.ServiceItem;
+import com.example.monitoringapp.ServiceExecution.Model.ServiceItem;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
         holder.account.setText(serviceItem.getAccount());
         holder.service.setText(serviceItem.getService());
         holder.status.setText(serviceItem.getStatus());
+
+        if (holder.status.getText().toString().equals("정상")) {
+            // 정상일 때에는 파란색
+            holder.status.setTextColor(Color.BLUE);
+        } else {
+            // 오류 발생 시 빨간색
+            holder.status.setTextColor(Color.RED);
+        }
     }
 
     @Override
