@@ -2,6 +2,8 @@ package com.example.monitoringapp.ServiceExecution.Connection;
 
 import android.util.Log;
 
+import com.example.monitoringapp.ServiceExecution.ServiceItem;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,16 +13,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
+import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.clicked;
 import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.forTest;
 import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.item_serviceSearch;
+import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.se_AGCD;
 
 public class ServiceSearchConnection {
 
     private static String accountSearchData;
+    public static ArrayList<ServiceItem> dataList = new ArrayList<>();
 
-    public static void getServiceSearch() {
+    public static void getServiceSearch(String AGCD) {
         System.out.println("호출 선택");
         URL url = null;
         HttpURLConnection conn_Url = null;
@@ -53,8 +59,19 @@ public class ServiceSearchConnection {
 //            jBObj_send.put("mdn", sMdn); 일단 무조건 빼기
 
 //            jBArr_send.put(jBObj_send);
-            jBObj_send2.put("AGCD", "");
-            jBObj_send2.put("SVCCD", "");
+//            jBObj_send2.put("AGCD", "");
+//            jBObj_send2.put("SVCCD", "");
+
+            if (clicked) {
+                // 거래처 선택되면
+                System.out.println("거래처 선택완료");
+                jBObj_send2.put("AGCD", AGCD);
+                jBObj_send2.put("SVCCD", "");
+
+            } else {
+                jBObj_send2.put("AGCD", "");
+                jBObj_send2.put("SVCCD", "");
+            }
 
 
 //            jTObj_send.put("header", jHArr_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
@@ -62,8 +79,7 @@ public class ServiceSearchConnection {
             jTObj_send2.put("body", jBObj_send2);
 
             sJson = jTObj_send2.toString();
-            System.out.println(sJson);
-            System.out.println("hihi" + sJson);
+            System.out.println("서비스 요청 메시지 : " + sJson);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -116,9 +132,9 @@ public class ServiceSearchConnection {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-            JSONObject object2 = jsonArray2.getJSONObject(1); // body
+            JSONObject object2 = jsonArray2.getJSONObject(0); // body
 
-            item_serviceSearch.add("전체 보기");
+//            item_serviceSearch.add("전체 보기");
             System.out.println("fortest" + forTest);
             for (int i = 0; i < jsonArray2.length(); i++) {
                 if (jsonArray2.getJSONObject(i).getString("AGCD").equals(forTest)) {
@@ -128,11 +144,16 @@ public class ServiceSearchConnection {
 
             }
 
-            System.out.println("jsonarray1 길이 " + jsonArray1.length());
-            System.out.println("jsonarray2 길이 " + jsonArray2.length());
+            for (int i = 0; i < jsonArray2.length(); i++) {
+                dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
+            }
 
-            System.out.println("jsonobject1 길이 " + object1.length());
-            System.out.println("jsonobject2 길이 " + object2.length());
+
+            System.out.println("jsonarray1 길이service " + jsonArray1.length());
+            System.out.println("jsonarray2 길이service " + jsonArray2.length());
+
+            System.out.println("jsonobject1 길이service " + object1.length());
+            System.out.println("jsonobject2 길이service " + object2.length());
 
             String test1 = object1.getString("TYPE");
             String test2 = object1.getString("RETURNCD");
