@@ -38,7 +38,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
-    private Button btn_search, btn_hide;
+    private Button btn_search, btn_hide, btn_back;
     private TextView tv_accountLabel, tv_serviceLabel;
 
     private ArrayList<String> item_accountSearch = new ArrayList<String>();
@@ -67,6 +67,14 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         binding = ActivityServiceExecutionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        btn_back = binding.serviceExecutionBtnBack;
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         item_serviceSearch.add("전체 보기");
 

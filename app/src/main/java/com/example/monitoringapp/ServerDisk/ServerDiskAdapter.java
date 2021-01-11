@@ -3,6 +3,7 @@ package com.example.monitoringapp.ServerDisk;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,14 @@ public class ServerDiskAdapter extends RecyclerView.Adapter<ServerDiskAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServerDiskItem serverDiskItem = mDataList.get(position);
 
+        int value = Integer.parseInt(serverDiskItem.getUsagePercent());
+
         holder.ip.setText(serverDiskItem.getIp());
         holder.remark.setText(serverDiskItem.getRemark());
         holder.driveName.setText(serverDiskItem.getDriveName());
         holder.freeSize.setText(serverDiskItem.getFreeSize());
         holder.totalSize.setText(serverDiskItem.getTotalSize());
+        holder.progressBar.setProgress(value);
 //        holder.usagePercent.setText(serverDiskItem.getUsagePercent());
 //        holder.usagePercent.setText("퍼센트");
         holder.date.setText(serverDiskItem.getDate());
@@ -49,7 +53,8 @@ public class ServerDiskAdapter extends RecyclerView.Adapter<ServerDiskAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView ip, remark, driveName, totalSize, freeSize, usagePercent, date, time;
+        TextView ip, remark, driveName, totalSize, freeSize, date, time;
+        ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +65,7 @@ public class ServerDiskAdapter extends RecyclerView.Adapter<ServerDiskAdapter.Vi
             freeSize = itemView.findViewById(R.id.item_disk_tv_remain);
             date = itemView.findViewById(R.id.item_disk_tv_date);
             time = itemView.findViewById(R.id.item_disk_tv_time);
+            progressBar = itemView.findViewById(R.id.item_disk_progressbar);
         }
     }
 }

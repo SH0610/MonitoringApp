@@ -33,7 +33,6 @@ public class ServerDiskConnection {
         Log.d("TARGET URL : ", sTarget_url);
 
         //전달 데이터 (json)
-        // {"header":{"TYPE":"01"},"body":[{}]}
         JSONArray jHArr_send = new JSONArray();
         JSONArray jBArr_send = new JSONArray();
         JSONObject jHObj_send = new JSONObject();
@@ -43,9 +42,7 @@ public class ServerDiskConnection {
         try {
             jHObj_send.put("TYPE", "03");
             jBObj_send.put("AGCD", AGCD);
-//            jBArr_send.put(jBObj_send);
 
-//            jTObj_send.put("header", jHArr_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
             jTObj_send.put("header", jHObj_send); // 이거 하면 {"header":{"TYPE":"01"},"body":[{}]}
             jTObj_send.put("body", jBObj_send);
 
@@ -103,35 +100,32 @@ public class ServerDiskConnection {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(1); // body
-            // index 0 : anx, index 1 : apl, index 2:
-//
+
             serverDiskList.clear();
             for (int i = 0; i < jsonArray2.length(); i++) {
-                System.out.println("isitworking " + jsonArray2.getJSONObject(i).getString("IP"));
-                System.out.println("isitworking " + jsonArray2.getJSONObject(i).getString("REMARK"));
-                serverDiskList.add(new ServerDiskItem(jsonArray2.getJSONObject(i).getString("IP"), jsonArray2.getJSONObject(i).getString("REMARK"), jsonArray2.getJSONObject(i).getString("DRIVE_NM"), jsonArray2.getJSONObject(i).getString("TOTAL_SIZE"), jsonArray2.getJSONObject(i).getString("FREE_SIZE"), jsonArray2.getJSONObject(i).getString("USAGE_PERCENT"), jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM")));
+                String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
+
+                String date, time;
+                if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                    date = "업데이트 정보 없음";
+                    time = "";
+                } else {
+                    forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
+                    forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                    parse_year = forParsingDate.substring(0, 4);
+                    parse_month = forParsingDate.substring(4, 6);
+                    parse_day = forParsingDate.substring(6, 8);
+
+                    parse_hour = forParsingTime.substring(0, 2);
+                    parse_min = forParsingTime.substring(2, 4);
+                    parse_sec = forParsingTime.substring(4, 6);
+
+                    date = parse_year + "-" + parse_month + "-" + parse_day;
+                    time = parse_hour + ":" + parse_min + ":" + parse_sec;
+                }
+                serverDiskList.add(new ServerDiskItem(jsonArray2.getJSONObject(i).getString("IP"), jsonArray2.getJSONObject(i).getString("REMARK"), jsonArray2.getJSONObject(i).getString("DRIVE_NM"), jsonArray2.getJSONObject(i).getString("TOTAL_SIZE"), jsonArray2.getJSONObject(i).getString("FREE_SIZE"), jsonArray2.getJSONObject(i).getString("USAGE_PERCENT"), date, time));
             }
-
-
-            System.out.println("jsonarray1 길이 " + jsonArray1.length());
-            System.out.println("jsonarray2 길이 " + jsonArray2.length());
-
-            System.out.println("jsonobject1 길이 " + object1.length());
-//            System.out.println("jsonobject2 길이 " + object2.length());
-
-            String test1 = object1.getString("TYPE");
-            String test2 = object1.getString("RETURNCD");
-
-//            String test3 = object2.getString("AGCD"); // 필요한 데이터
-//
-//            String test4 = object2.getString("AGNM"); // 필요한 데이터
-//            forTest = test3;
-
-            System.out.println("type : " + test1); // type : 01
-            System.out.println("returncd : " + test2); // returncd : 00
-//            System.out.println("agcd : " + test3); // agcd : anx
-//            System.out.println("agnm : " + test4); // agnm : 에넥스텔레콤
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();

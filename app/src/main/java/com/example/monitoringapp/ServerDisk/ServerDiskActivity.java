@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.monitoringapp.R;
@@ -25,8 +26,12 @@ public class ServerDiskActivity extends AppCompatActivity {
     public static ArrayList<String> item_serverDisk = new ArrayList<String>();
     public static ArrayList<String> item_serverDiskCode = new ArrayList<String>();
 
+    private Button btn_filter, btn_back;
+    private boolean hideBtnClicked = false;
+    private TextView server_disk_label;
+
     public static ArrayList<ServerDiskItem> serverDiskList = new ArrayList<>(); // 서버 디스크 목록 가져오기 (ip, remark)
-    private Button btn_disk;
+    private Button btn_searchDisk;
 
     public static String sd_AGCD; // 대리점코드
     public static String sd_AGNM; // 대리점이름
@@ -68,9 +73,13 @@ public class ServerDiskActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
 
-
-
-
+        btn_back = binding.serverDiskBtnBack;
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         spinner = binding.serverDiskSpinner;
 
@@ -90,14 +99,16 @@ public class ServerDiskActivity extends AppCompatActivity {
             }
         });
 
-        final RecyclerView recyclerView = binding.serverDiskRecyclerview;
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
 
-        btn_disk = findViewById(R.id.server_disk_btn);
-        btn_disk.setOnClickListener(new View.OnClickListener() {
+        btn_searchDisk = findViewById(R.id.server_disk_btn);
+        btn_searchDisk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                final RecyclerView recyclerView = binding.serverDiskRecyclerview;
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(layoutManager);
+
                 ServerDiskConnection.getServerDisk(sd_AGCD);
                 ServerDiskAdapter serverDiskAdapter = new ServerDiskAdapter(serverDiskList);
                 recyclerView.setAdapter(serverDiskAdapter);
@@ -105,7 +116,24 @@ public class ServerDiskActivity extends AppCompatActivity {
             }
         });
 
-
+        server_disk_label = findViewById(R.id.server_disk_tv_label);
+        btn_filter = findViewById(R.id.server_disk_btn_hide);
+        btn_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hideBtnClicked == false) { // 한번 클릭
+                    hideBtnClicked = true;
+                    spinner.setVisibility(view.GONE);
+                    server_disk_label.setVisibility(view.GONE);
+                    btn_searchDisk.setVisibility(view.GONE);
+                } else { // 두번 클릭
+                    hideBtnClicked = false;
+                    spinner.setVisibility(view.VISIBLE);
+                    server_disk_label.setVisibility(view.VISIBLE);
+                    btn_searchDisk.setVisibility(view.VISIBLE);
+                }
+            }
+        });
 
     }
 }

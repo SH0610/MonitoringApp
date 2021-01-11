@@ -8,16 +8,22 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_service"
+        android:id="@+id/main_btn_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="서비스 실행 여부 조회" />
 
     <Button
-        android:id="@+id/btn_disk"
+        android:id="@+id/main_btn_disk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="서버 디스크 용량 확인" />
+
+    <Button
+        android:id="@+id/main_btn_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오류 처리 결과" />
 
 
 </LinearLayout>

@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ErrorCatch.ErrorInfoActivity" />
+        <activity android:name=".ErrorCatch.ErrorCatchActivity" />
         <activity
             android:name=".ServerDisk.ServerDiskActivity"
             android:screenOrientation="portrait" />

@@ -3,37 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ServiceExecution.ServiceExecutionActivity" >
+    tools:context=".ErrorCatch.ErrorCatchActivity">
 
     <RelativeLayout
-        android:id="@+id/relativelayout"
+        android:id="@+id/error_catch_relativelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp" >
 
         <Button
-            android:id="@+id/service_execution_btn_back"
+            android:id="@+id/error_catch_btn_back"
             android:layout_centerVertical="true"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/icon_back" />
 
         <TextView
-            android:id="@+id/server_disk_label"
-            android:layout_toEndOf="@+id/service_execution_btn_back"
-            android:layout_toRightOf="@+id/service_execution_btn_back"
+            android:id="@+id/error_catch_label"
+            android:layout_toEndOf="@+id/error_catch_btn_back"
+            android:layout_toRightOf="@+id/error_catch_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="서비스 실행 여부 조회"
+            android:text="오류 처리 결과"
             android:textSize="27sp"
             android:textColor="@android:color/black" />
 
         <Button
-            android:id="@+id/service_execution_btn_hide"
+            android:id="@+id/error_catch_btn_hide"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -51,7 +51,7 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/service_execution_tv_label1"
+            android:id="@+id/error_catch_tv_label1"
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/service_execution_tv_label2"
+            android:id="@+id/error_catch_tv_label2"
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -83,14 +83,14 @@
         android:layout_marginBottom="10dp" >
 
         <Spinner
-            android:id="@+id/service_execution_spinner1"
+            android:id="@+id/error_catch_spinner1"
             android:spinnerMode="dialog"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="0.3" />
 
         <Spinner
-            android:id="@+id/service_execution_spinner2"
+            android:id="@+id/error_catch_spinner2"
             android:spinnerMode="dialog"
             android:layout_width="0dp"
             android:layout_height="30dp"
@@ -99,7 +99,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/service_execution_btn"
+        android:id="@+id/error_catch_btn"
         android:layout_gravity="center"
         android:background="@drawable/custom_button"
         android:layout_marginHorizontal="25dp"
@@ -107,19 +107,5 @@
         android:layout_height="40dp"
         android:textSize="12sp"
         android:text="조회하기" />
-
-    <LinearLayout
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/service_execution_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </LinearLayout>
