@@ -143,10 +143,73 @@ public class ServiceSearchConnection {
                 dataList.clear();
                 for (int i = 0; i < jsonArray2.length(); i++) {
                     if (jsonArray2.getJSONObject(i).getString("SVCNM").equals(SVCNM)) { // 서비스 필터링
-                        dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
+                        String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
+
+                        String date, time;
+                        if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                            date = "업데이트 정보 없음";
+                            time = "";
+                        } else {
+                            forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
+                            forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                            parse_year = forParsingDate.substring(0, 4);
+                            parse_month = forParsingDate.substring(4, 6);
+                            parse_day = forParsingDate.substring(6, 8);
+
+                            parse_hour = forParsingTime.substring(0, 2);
+                            parse_min = forParsingTime.substring(2, 4);
+                            parse_sec = forParsingTime.substring(4, 6);
+
+
+                            System.out.println("if 1234년 " + parse_year);
+                            System.out.println("if 1234월 " + parse_month);
+                            System.out.println("if 1234일 " + parse_day);
+                            System.out.println("if 1234시 " + parse_hour);
+                            System.out.println("if 1234분 " + parse_min);
+                            System.out.println("if 1234초 " + parse_sec);
+
+
+                            date = parse_year + "-" + parse_month + "-" + parse_day;
+                            time = parse_hour + ":" + parse_min + ":" + parse_sec;
+                        }
+                        dataList.add(new ServiceItem(date, time, jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
                     }
                     else if (SVCNM.equals("")){ // 전체 보기
-                        dataList.add(new ServiceItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
+                        String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
+
+                        String date, time;
+                        if (jsonArray2.getJSONObject(i).getString("UPDDT").equals("") || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                            date = "업데이트 정보 없음";
+                            time = "";
+                        } else {
+                            forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
+                            forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                            parse_year = forParsingDate.substring(0, 4);
+                            parse_month = forParsingDate.substring(4, 6);
+                            parse_day = forParsingDate.substring(6, 8);
+
+                            parse_hour = forParsingTime.substring(0, 2);
+                            parse_min = forParsingTime.substring(2, 4);
+                            parse_sec = forParsingTime.substring(4, 6);
+
+                            System.out.println("1234년 " + parse_year);
+                            System.out.println("1234월 " + parse_month);
+                            System.out.println("1234일 " + parse_day);
+
+                            System.out.println("1234시 " + parse_hour);
+                            System.out.println("1234분 " + parse_min);
+                            System.out.println("1234초 " + parse_sec);
+
+                            date = parse_year + "-" + parse_month + "-" + parse_day;
+                            time = parse_hour + ":" + parse_min + ":" + parse_sec;
+                        }
+                        if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                            date = "정보 없음";
+                            time = "정보 없음";
+                        }
+                        dataList.add(new ServiceItem(date, time, jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("RESULT")));
                     }
                 }
             }

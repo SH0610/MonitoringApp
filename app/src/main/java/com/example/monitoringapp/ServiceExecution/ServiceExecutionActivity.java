@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.monitoringapp.ServiceExecution.Adapter.ServiceAdapter;
@@ -35,10 +36,12 @@ import static com.example.monitoringapp.ServiceExecution.Connection.ServiceSearc
 public class ServiceExecutionActivity extends AppCompatActivity {
 
     public static boolean clicked = false;
+    private boolean hideBtnClicked = false;
 
     private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
-    private Button btn_search;
+    private Button btn_search, btn_hide;
+    private TextView tv_accountLabel, tv_serviceLabel;
 
     private ArrayList<String> item_accountSearch = new ArrayList<String>();
     public static ArrayList<String> item_serviceSearch = new ArrayList<String>();
@@ -268,6 +271,34 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                 ServiceAdapter serviceAdapter = new ServiceAdapter(dataList);
                 recyclerView.setAdapter(serviceAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+
+        tv_accountLabel = binding.serviceExecutionTvLabel1;
+        tv_serviceLabel = binding.serviceExecutionTvLabel2;
+
+
+
+        btn_hide = binding.serviceExecutionBtnHide;
+        btn_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hideBtnClicked == false) { // 한번 클릭
+                    hideBtnClicked = true;
+                    spinner1.setVisibility(view.GONE);
+                    spinner2.setVisibility(view.GONE);
+                    tv_accountLabel.setVisibility(view.GONE);
+                    tv_serviceLabel.setVisibility(view.GONE);
+                    btn_search.setVisibility(view.GONE);
+                } else { // 두번 클릭
+                    hideBtnClicked = false;
+                    spinner1.setVisibility(view.VISIBLE);
+                    spinner2.setVisibility(view.VISIBLE);
+                    tv_accountLabel.setVisibility(view.VISIBLE);
+                    tv_serviceLabel.setVisibility(view.VISIBLE);
+                    btn_search.setVisibility(view.VISIBLE);
+                }
             }
         });
     }
