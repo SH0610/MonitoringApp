@@ -15,8 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.monitoringapp.ServiceExecution.Adapter.ServiceAdapter;
-import com.example.monitoringapp.ServiceExecution.Connection.ServiceSearchConnection;
 import com.example.monitoringapp.databinding.ActivityServiceExecutionBinding;
 
 import org.json.JSONArray;
@@ -31,7 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
-import static com.example.monitoringapp.ServiceExecution.Connection.ServiceSearchConnection.dataList;
+import static com.example.monitoringapp.ServiceExecution.ServiceSearchConnection.dataList;
 
 public class ServiceExecutionActivity extends AppCompatActivity {
 
@@ -48,11 +46,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private ArrayList<String> item_accountSearchCode = new ArrayList<String>();
 
-//    private String selectedAccount; // 선택된 대리점 이름
-//    private String selectedService; // 선택된 서비스 이름
-
     StringBuffer stringBuffer = new StringBuffer();
-//    StringBuffer stringBuffer2 = new StringBuffer();
     private String accountSearchData;
 
     public static String forTest;
@@ -277,8 +271,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         tv_accountLabel = binding.serviceExecutionTvLabel1;
         tv_serviceLabel = binding.serviceExecutionTvLabel2;
-
-
 
         btn_hide = binding.serviceExecutionBtnHide;
         btn_hide.setOnClickListener(new View.OnClickListener() {

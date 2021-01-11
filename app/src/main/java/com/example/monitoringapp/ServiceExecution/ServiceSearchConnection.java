@@ -1,8 +1,6 @@
-package com.example.monitoringapp.ServiceExecution.Connection;
+package com.example.monitoringapp.ServiceExecution;
 
 import android.util.Log;
-
-import com.example.monitoringapp.ServiceExecution.Model.ServiceItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;

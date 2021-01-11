@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ServiceExecution.Adapter;
+package com.example.monitoringapp.ServiceExecution;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.monitoringapp.R;
-import com.example.monitoringapp.ServiceExecution.Model.ServiceItem;
 
 import java.util.ArrayList;
 

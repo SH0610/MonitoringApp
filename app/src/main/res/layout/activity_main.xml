@@ -8,15 +8,16 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/btn_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test" />
+        android:text="서비스 실행 여부 조회" />
 
-    <TextView
-        android:id="@+id/txt_test"
+    <Button
+        android:id="@+id/btn_disk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:text="서버 디스크 용량 확인" />
+
 
 </LinearLayout>

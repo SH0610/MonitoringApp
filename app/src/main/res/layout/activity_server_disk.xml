@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ServiceExecution.ServiceExecutionActivity" >
+    android:background="@android:color/white"
+    tools:context=".ServerDisk.ServerDiskActivity">
 
     <RelativeLayout
-        android:id="@+id/relativelayout"
+        android:id="@+id/server_disk_relativelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp" >
@@ -18,19 +18,9 @@
             android:id="@+id/server_disk_execution_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="서비스 실행 여부 조회"
+            android:text="서버 디스크 용량 확인"
             android:textSize="30sp"
             android:textColor="@android:color/black" />
-
-        <Button
-            android:id="@+id/service_execution_btn_hide"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/icon_funnel"
-            android:padding="10dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
 
     </RelativeLayout>
 
@@ -41,7 +31,7 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/service_execution_tv_label1"
+            android:id="@+id/server_disk_tv_label1"
             android:layout_weight="0.3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,17 +39,6 @@
             android:layout_marginLeft="8dp"
             android:textSize="10sp"
             android:text="거래처 선택"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/service_execution_tv_label2"
-            android:layout_weight="0.3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:textSize="10sp"
-            android:text="서비스 선택"
             android:visibility="visible" />
 
     </LinearLayout>
@@ -73,14 +52,7 @@
         android:layout_marginBottom="10dp" >
 
         <Spinner
-            android:id="@+id/service_execution_spinner1"
-            android:spinnerMode="dialog"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="0.3" />
-
-        <Spinner
-            android:id="@+id/service_execution_spinner2"
+            android:id="@+id/server_disk_spinner"
             android:spinnerMode="dialog"
             android:layout_width="0dp"
             android:layout_height="30dp"
@@ -89,7 +61,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/service_execution_btn"
+        android:id="@+id/server_disk_btn"
         android:layout_gravity="center"
         android:background="@drawable/custom_button"
         android:layout_marginHorizontal="25dp"
@@ -97,6 +69,7 @@
         android:layout_height="40dp"
         android:textSize="12sp"
         android:text="조회하기" />
+
 
     <LinearLayout
         android:layout_marginTop="7dp"
@@ -106,10 +79,11 @@
         android:layout_height="wrap_content" >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/service_execution_recyclerview"
+            android:id="@+id/server_disk_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
 
 </LinearLayout>
