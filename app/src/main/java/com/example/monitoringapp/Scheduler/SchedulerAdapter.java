@@ -1,5 +1,6 @@
 package com.example.monitoringapp.Scheduler;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,13 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
         holder.service.setText(schedulerItem.getService());
 
         if (schedulerItem.getStatus().equals("1")) {
-            holder.status.setText("처리 완료");
+            holder.status.setText("완료");
+            holder.status.setBackgroundColor(Color.parseColor("#BDECB6"));
+            holder.status.setTextColor(Color.parseColor("#008000"));
         } else if (schedulerItem.getStatus().equals("0")) {
             holder.status.setText("미처리");
-
-
+            holder.status.setBackgroundColor(Color.parseColor("#FFC0CB"));
+            holder.status.setTextColor(Color.RED);
         }
     }
 

@@ -106,28 +106,45 @@ public class SchedulerConnection {
 
             schedulerList.clear();
             for (int i = 0; i < jsonArray2.length(); i++) {
-//                String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
-//
-//                String date, time;
-//                if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
-//                    date = "업데이트 정보 없음";
-//                    time = "";
-//                } else {
-//                    forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
-//                    forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
-//
-//                    parse_year = forParsingDate.substring(0, 4);
-//                    parse_month = forParsingDate.substring(4, 6);
-//                    parse_day = forParsingDate.substring(6, 8);
-//
-//                    parse_hour = forParsingTime.substring(0, 2);
-//                    parse_min = forParsingTime.substring(2, 4);
-//                    parse_sec = forParsingTime.substring(4, 6);
-//
-//                    date = parse_year + "-" + parse_month + "-" + parse_day;
-//                    time = parse_hour + ":" + parse_min + ":" + parse_sec;
-//                }
-                schedulerList.add(new SchedulerItem(jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM"), jsonArray2.getJSONObject(i).getString("EXEDT"), jsonArray2.getJSONObject(i).getString("EXETM"), jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("EXEFG")));
+                String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec; // 실제
+                String forParsingDate2, forParsingTime2, parse_year2, parse_month2, parse_day2, parse_hour2, parse_min2, parse_sec2; // 예상
+
+                String date, time; // 실제
+                String date2, time2; // 예상
+                if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                    date = "업데이트 정보 없음";
+                    time = "";
+                } else {
+                    forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
+                    forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                    parse_year = forParsingDate.substring(0, 4);
+                    parse_month = forParsingDate.substring(4, 6);
+                    parse_day = forParsingDate.substring(6, 8);
+
+                    parse_hour = forParsingTime.substring(0, 2);
+                    parse_min = forParsingTime.substring(2, 4);
+                    parse_sec = forParsingTime.substring(4, 6);
+
+                    date = parse_year + "-" + parse_month + "-" + parse_day;
+                    time = parse_hour + ":" + parse_min + ":" + parse_sec;
+                }
+
+                forParsingDate2 = jsonArray2.getJSONObject(i).getString("EXEDT");
+                forParsingTime2 = jsonArray2.getJSONObject(i).getString("EXETM");
+
+                parse_year2 = forParsingDate2.substring(0, 4);
+                parse_month2 = forParsingDate2.substring(4, 6);
+                parse_day2 = forParsingDate2.substring(6, 8);
+
+                parse_hour2 = forParsingTime2.substring(0, 2);
+                parse_min2 = forParsingTime2.substring(2, 4);
+                parse_sec2 = forParsingTime2.substring(4, 6);
+
+                date2 = parse_year2 + "-" + parse_month2 + "-" + parse_day2;
+                time2 = parse_hour2 + ":" + parse_min2 + ":" + parse_sec2;
+
+                schedulerList.add(new SchedulerItem(date, time, date2, time2, jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("EXEFG")));
             }
         } catch (JSONException e) {
             System.out.println(e);
