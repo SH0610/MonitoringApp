@@ -9,13 +9,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_service, btn_disk, btn_error;
+    private Button btn_service, btn_disk, btn_scheduler, btn_error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ServerDiskActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_scheduler = findViewById(R.id.main_btn_scheduler);
+        btn_scheduler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SchedulerActivity.class);
                 startActivity(intent);
             }
         });

@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Scheduler.SchedulerActivity"></activity>
         <activity android:name=".ErrorCatch.ErrorInfoActivity" />
         <activity android:name=".ErrorCatch.ErrorCatchActivity" />
         <activity

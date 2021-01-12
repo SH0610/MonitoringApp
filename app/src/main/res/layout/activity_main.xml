@@ -20,6 +20,12 @@
         android:text="서버 디스크 용량 확인" />
 
     <Button
+        android:id="@+id/main_btn_scheduler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스케줄러 관리" />
+
+    <Button
         android:id="@+id/main_btn_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
