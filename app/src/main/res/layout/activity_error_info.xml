@@ -10,9 +10,6 @@
     tools:context=".ErrorCatch.ErrorInfoActivity">
 
     <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -53,6 +53,9 @@ public class ServerDiskActivity extends AppCompatActivity {
         binding = ActivityServerDiskBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        item_serverDisk.clear();
+        item_serverDiskCode.clear();
+
 //        item_serverDisk.add("전체 보기");
         item_serverDisk.add("에넥스텔레콤");
         item_serverDisk.add("ACN코리아");
@@ -60,6 +63,7 @@ public class ServerDiskActivity extends AppCompatActivity {
         item_serverDisk.add("KT파워텔");
         item_serverDisk.add("모은넷");
         item_serverDisk.add("웰네트웍스");
+        item_serverDisk.add("거래처를 선택해주세요.");
 
 //        item_serverDiskCode.add("전체 보기");
         item_serverDiskCode.add("ANX");
@@ -68,6 +72,7 @@ public class ServerDiskActivity extends AppCompatActivity {
         item_serverDiskCode.add("KTP");
         item_serverDiskCode.add("MNT");
         item_serverDiskCode.add("WEL");
+        item_serverDiskCode.add("거래처를 선택해주세요.");
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
@@ -83,9 +88,15 @@ public class ServerDiskActivity extends AppCompatActivity {
 
         spinner = binding.serverDiskSpinner;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, item_serverDisk);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        ServerDiskSpinnerAdapter serverDiskSpinnerAdapter = new ServerDiskSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, item_serverDisk);
+        serverDiskSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(serverDiskSpinnerAdapter);
+        spinner.setSelection(spinner.getCount());
+
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, item_serverDisk);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
