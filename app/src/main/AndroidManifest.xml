@@ -12,9 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Scheduler.SchedulerActivity"></activity>
-        <activity android:name=".ErrorCatch.ErrorInfoActivity" />
-        <activity android:name=".ErrorCatch.ErrorCatchActivity" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Login.LoginActivity" />
+        <activity
+            android:name=".Scheduler.SchedulerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ErrorCatch.ErrorInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ErrorCatch.ErrorCatchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ServerDisk.ServerDiskActivity"
             android:screenOrientation="portrait" />

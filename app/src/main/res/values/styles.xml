@@ -4,14 +4,20 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#E64122</item>
         <!-- 상단 바 제거 -->
         <item name="windowNoTitle">true</item>
+        <!-- 전체 화면 -->
+        <item name="android:windowFullscreen">true</item>
     </style>
     <style name="CustomProgressBar" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:indeterminateOnly">false</item>
         <item name="android:progressDrawable">@drawable/custom_progressbar</item>
         <item name="android:minHeight">10dip</item>
         <item name="android:maxHeight">20dip</item>
+    </style>
+
+    <style name="SplashTheme" parent="@style/Theme.Design.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/img_splash</item>
     </style>
 </resources>

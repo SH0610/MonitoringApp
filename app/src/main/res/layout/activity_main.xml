@@ -31,5 +31,11 @@
         android:layout_height="wrap_content"
         android:text="오류 처리 결과" />
 
+    <TextView
+        android:id="@+id/main_tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        tools:text="로그인 아이디" />
 
 </LinearLayout>
