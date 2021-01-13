@@ -17,13 +17,15 @@ import com.example.monitoringapp.databinding.ActivitySchedulerBinding;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SchedulerActivity extends AppCompatActivity {
 
     private Button btn_back, btn_hide, btn_searchScheduler;
     private Button btn_day, btn_week, btn_month;
     private TextView tv_scheduler_label; // 스케줄러 관리 (제목)
-    private TextView tv_start, tv_end;
+    private TextView tv_start, tv_end, tv_divider;
     private ActivitySchedulerBinding binding;
     private boolean hideBtnClicked = false;
 
@@ -55,9 +57,91 @@ public class SchedulerActivity extends AppCompatActivity {
             }
         });
 
+        tv_divider = binding.schedulerDateTvDivider;
+
         tv_start = binding.schedulerDateTvStart;
+        // 초기 날짜 (미리 지정되어있음)
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String init_dt = simpleDateFormat.format(mDate);
+        tv_start.setText(init_dt);
+        tv_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePickerDialog;
+                mDatePickerDialog = new DatePickerDialog(SchedulerActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        // i : year, i1 : month, i2 : day
+                        // i1에서 1월이면 0, 2월이면 1, 3월이면 2가 나오므로 1을 더해줘야함
+                        int forMonth = i1 + 1;
+                        String startdt;
+                        System.out.println("i : " + i + "  i1 : " + forMonth + "  i2 : " + i2);
+                        if (forMonth < 10) {
+                            startdt = i + "-0" + forMonth + "-";
+                        } else {
+//                            String tmp = Integer.toString(forMonth);
+                            startdt = i + "-" + forMonth + "-";
+                        }
+
+                        if (i2 < 10) {
+                            startdt = startdt + "0" + i2;
+                        }
+                        else {
+                            startdt = startdt + i2;
+                        }
+                        System.out.println(startdt);
+                        tv_start.setText(startdt);
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePickerDialog.show();
+            }
+        });
 
         tv_end = binding.schedulerDateTvEnd;
+        // 초기 날짜 (미리 지정되어있음)
+        tv_end.setText(init_dt);
+        tv_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePickerDialog;
+                mDatePickerDialog = new DatePickerDialog(SchedulerActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        // i : year, i1 : month, i2 : day
+                        int forMonth = i1 + 1;
+                        String enddt;
+                        System.out.println("i : " + i + "  i1 : " + forMonth + "  i2 : " + i2);
+                        if (forMonth < 10) {
+                            enddt = i + "-0" + forMonth + "-";
+                        } else {
+                            enddt = i + "-" + forMonth + "-";
+                        }
+
+                        if (i2 < 10) {
+                            enddt = enddt + "0" + i2;
+                        }
+                        else {
+                            enddt = enddt + i2;
+                        }
+                        System.out.println(enddt);
+                        tv_end.setText(enddt);
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePickerDialog.show();
+            }
+        });
 
         btn_day = binding.schedulerBtnDay;
 
@@ -75,8 +159,8 @@ public class SchedulerActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(layoutManager);
 
 
-                STARTDT = "20210101";
-                ENDDT = "20210117";
+                STARTDT = tv_start.getText().toString();
+                ENDDT = tv_end.getText().toString();
 
                 SchedulerConnection.getSchedulerData(STARTDT, ENDDT);
                 SchedulerAdapter schedulerAdapter = new SchedulerAdapter(schedulerList);
@@ -94,6 +178,7 @@ public class SchedulerActivity extends AppCompatActivity {
                     hideBtnClicked = true;
 //                    spinner.setVisibility(view.GONE);
                     tv_scheduler_label.setVisibility(view.GONE);
+                    tv_divider.setVisibility(view.GONE);
                     btn_searchScheduler.setVisibility(view.GONE);
                     btn_day.setVisibility(view.GONE);
                     btn_week.setVisibility(view.GONE);
@@ -102,6 +187,7 @@ public class SchedulerActivity extends AppCompatActivity {
                     hideBtnClicked = false;
 //                    spinner.setVisibility(view.VISIBLE);
                     tv_scheduler_label.setVisibility(view.VISIBLE);
+                    tv_divider.setVisibility(view.VISIBLE);
                     btn_searchScheduler.setVisibility(view.VISIBLE);
                     btn_day.setVisibility(view.VISIBLE);
                     btn_week.setVisibility(view.VISIBLE);

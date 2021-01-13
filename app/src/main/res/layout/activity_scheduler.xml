@@ -118,6 +118,8 @@
             android:layout_weight="0.35"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             tools:text="2021-01-01"/>
@@ -138,6 +140,8 @@
             android:layout_weight="0.35"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             tools:text="2021-01-10" />

@@ -28,7 +28,7 @@
         android:layout_below="@+id/login_img_moeunnet" />
 
     <TextView
-        android:id="@+id/login_tv_number"
+        android:id="@+id/login_tv_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -41,7 +41,7 @@
     <EditText
         android:id="@+id/login_et_id"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/login_tv_number"
+        android:layout_below="@+id/login_tv_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"

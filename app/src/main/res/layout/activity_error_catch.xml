@@ -108,4 +108,18 @@
         android:textSize="12sp"
         android:text="조회하기" />
 
+    <LinearLayout
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/error_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>
