@@ -1,9 +1,6 @@
 package com.example.monitoringapp.Login;
 
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.example.monitoringapp.ServiceExecution.ServiceItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,9 +14,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
-import static com.example.monitoringapp.BaseActivity.sharedPreferences;
-import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.clicked;
-import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.item_serviceSearch;
 
 public class LoginConnection {
 

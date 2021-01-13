@@ -69,6 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         tv_id = binding.mainTvId;
         SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
-        tv_id.setText(sharedPreferences.getString("id", ""));
+        tv_id.setText(sharedPreferences.getString("id", "NO ID"));
     }
 }
