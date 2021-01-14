@@ -23,6 +23,7 @@ public class SchedulerConnection {
 
     public static void getSchedulerData(String STARTDT, String ENDDT) {
         StringBuffer stringBuffer_sc = new StringBuffer();
+        String resultCode = null;
 
         URL url = null;
         HttpURLConnection conn_Url = null;
@@ -111,12 +112,15 @@ public class SchedulerConnection {
 
                 String date, time; // 실제
                 String date2, time2; // 예상
-                if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                if (jsonArray2.getJSONObject(i).getString("UPDDT").equals("") || jsonArray2.getJSONObject(i).getString("UPDTM").equals("")) {
                     date = "업데이트 정보 없음";
                     time = "";
                 } else {
                     forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
                     forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                    System.out.println("TEST" + forParsingDate);
+                    System.out.println("TEST" + forParsingTime);
 
                     parse_year = forParsingDate.substring(0, 4);
                     parse_month = forParsingDate.substring(4, 6);
@@ -150,5 +154,6 @@ public class SchedulerConnection {
             System.out.println(e);
             e.printStackTrace();
         }
+//        return resultCode;
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.monitoringapp.R;
 import com.example.monitoringapp.databinding.ActivitySchedulerBinding;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,15 +32,6 @@ public class SchedulerActivity extends AppCompatActivity {
     private ActivitySchedulerBinding binding;
     private boolean hideBtnClicked = false;
 
-    public static String sc_AGCD; // 대리점코드
-    public static String sc_AGNM; // 대리점이름
-    public static String sc_SVCCD; // 서비스코드
-    public static String sc_SVCNM; // 서비스명
-    public static String sc_EXEFG; // 처리여부
-    public static String sc_EXEDT; // 예상실행일자
-    public static String sc_EXETM; // 예상실행시간
-    public static String sc_UPDDT; // 실제실행일자
-    public static String sc_UPDTM; // 실제실행시간
     private String STARTDT = null;
     private String ENDDT = null;
 
@@ -187,17 +179,6 @@ public class SchedulerActivity extends AppCompatActivity {
             }
         });
 
-//        // init_dt 에서 parse 해오기
-//        final int parseYear, parseMonth, parseDay;
-//        System.out.println("init_dt : " + init_dt);
-//
-//        parseYear = Integer.parseInt(init_dt.substring(0, 4));
-//        System.out.println("init_dt : " + parseYear);
-//        parseMonth = Integer.parseInt(init_dt.substring(4, 6));
-//        System.out.println("init_dt : " + parseMonth);
-//        parseDay = Integer.parseInt(init_dt.substring(6, 8));
-//        System.out.println("init_dt : " + parseDay);
-
         btn_day = binding.schedulerBtnDay;
         btn_day.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,11 +214,13 @@ public class SchedulerActivity extends AppCompatActivity {
                 System.out.println("tv_start" + tv_start.getText().toString());
                 String enddt;
                 enddt = getLaterMonth(tv_start.getText().toString(), 1);
+                System.out.println(enddt);
                 tv_end.setText(enddt);
                 ENDDT = enddt;
             }
         });
 
+        // 조회하기 버튼
         btn_searchScheduler = binding.schedulerBtnSearch;
         btn_searchScheduler.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,7 +229,6 @@ public class SchedulerActivity extends AppCompatActivity {
                 final RecyclerView recyclerView = binding.schedulerRecyclerview;
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(layoutManager);
-
 
                 STARTDT = tv_start.getText().toString();
                 ENDDT = tv_end.getText().toString();
@@ -263,9 +245,8 @@ public class SchedulerActivity extends AppCompatActivity {
         btn_hide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (hideBtnClicked == false) { // 한번 클릭
+                if (!hideBtnClicked) { // 한번 클릭
                     hideBtnClicked = true;
-//                    spinner.setVisibility(view.GONE);
                     tv_scheduler_label.setVisibility(view.GONE);
                     tv_start.setVisibility(view.GONE);
                     tv_end.setVisibility(view.GONE);
@@ -276,7 +257,6 @@ public class SchedulerActivity extends AppCompatActivity {
                     btn_month.setVisibility(view.GONE);
                 } else { // 두번 클릭
                     hideBtnClicked = false;
-//                    spinner.setVisibility(view.VISIBLE);
                     tv_scheduler_label.setVisibility(view.VISIBLE);
                     tv_start.setVisibility(view.VISIBLE);
                     tv_end.setVisibility(view.VISIBLE);
@@ -290,85 +270,47 @@ public class SchedulerActivity extends AppCompatActivity {
         });
     }
 
+    // 7일 후의 년, 월, 일 받아옴
     private String getLaterDay(String originDay, int laterCnt) {
         System.out.println("originday" + originDay);
-        String laterDay = null;
 
+        Calendar cal = Calendar.getInstance();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
         try {
-            Calendar calendar = Calendar.getInstance();
-            Date originDate = new Date();
-            Date laterDate = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
-//            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyyMMdd");
-//
-//            System.out.println("test");
-//            System.out.println(originDay); // 선택시작날짜
-            originDate = simpleDateFormat.parse(originDay);
-            calendar.setTime(laterDate);
-//
-//            System.out.println(originDate); // 이상한값이나와
-
-            calendar.add(Calendar.DATE, laterCnt); // laterCnt일 후의 날짜를 구한다.
-            laterDate = calendar.getTime();
-            laterDay = simpleDateFormat.format(laterDate);
+            date = formatter.parse(originDay); // 날짜
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        cal.setTime(date);
+        System.out.println("입력 날짜 : " + formatter.format(cal.getTime()));
 
-        System.out.println("laterDay" + laterDay);
-        return laterDay;
+        cal.add(Calendar.DATE, laterCnt);
+        System.out.println("출력 날짜 : " + formatter.format(cal.getTime()));
+
+        String returnValue = formatter.format(cal.getTime());
+        return returnValue;
     }
 
+    // 한 달 후의 년, 월, 일 받아옴
     private String getLaterMonth(String originDay, int laterCnt) {
         System.out.println("originday" + originDay);
-        String originDay2 = originDay.replaceAll("-" ,"");
 
-        String tmp_year = originDay.substring(0, 4);
-        String tmp_month = originDay.substring(5, 7);
-        String tmp_day =  originDay.substring(8, 10);
-
-        System.out.println("tmp_year : " + tmp_year + " tmp_month: " + tmp_month + "  tmp_day : " + tmp_day);
-        String tmp_date = null;
-
-        String laterDay = null;
-
+        Calendar cal = Calendar.getInstance();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
         try {
-            Calendar calendar = Calendar.getInstance();
-            Date originDate = new Date();
-            Date laterDate = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-
-            System.out.println("test");
-            System.out.println(originDay); // 선택시작날짜
-            originDate = simpleDateFormat.parse(originDay);
-            calendar.setTime(laterDate);
-//
-//            System.out.println(originDate); // 이상한값이나와
-
-            calendar.add(Calendar.MONTH, laterCnt); // laterCnt 개월 후의 월을 구한다.
-            laterDate = calendar.getTime();
-            laterDay = simpleDateFormat.format(laterDate);
+            date = formatter.parse(originDay); // 날짜
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        cal.setTime(date);
+        System.out.println("입력 날짜 : " + formatter.format(cal.getTime()));
 
-        tmp_year = laterDay.substring(0, 4);
-        tmp_month = laterDay.substring(4, 6);
-        tmp_day =  laterDay.substring(6, 8);
+        cal.add(Calendar.MONTH, laterCnt);
+        System.out.println("출력 날짜 : " + formatter.format(cal.getTime()));
 
-        System.out.println("tmp_year : " + tmp_year + " tmp_month: " + tmp_month + "  tmp_day : " + tmp_day);
-
-        // 날짜를 2021-01-01 형식으로 맞춰주기
-        tmp_date = tmp_year + "-" + tmp_month + "-";
-
-        if (Integer.parseInt(tmp_day) < 10) {
-            tmp_date = tmp_date + "0" + tmp_day;
-        }
-        else {
-            tmp_date = tmp_date + tmp_day;
-        }
-
-        System.out.println("laterMonth" + laterDay);
-        return tmp_date;
+        String returnValue = formatter.format(cal.getTime());
+        return returnValue;
     }
 }
