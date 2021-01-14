@@ -41,6 +41,8 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
         holder.pre_time.setText(schedulerItem.getPre_time());
         holder.account.setText(schedulerItem.getAccount());
         holder.service.setText(schedulerItem.getService());
+        holder.status.setBackgroundColor(Color.WHITE);
+        holder.status.setTextColor(Color.parseColor("#000000"));
 
         if (schedulerItem.getStatus().equals("1")) {
             holder.status.setText("완료");
@@ -98,12 +100,31 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
             final String init_dt = Integer.toString(init_year) + "-" + st_init_month + "-" + st_init_day;
             String nowDate = init_dt.replaceAll("-", "");
 
-            nowDate = nowDate + init_hour + init_min + init_sec;
+            String real_hour, real_min, real_sec;
+            if (init_hour < 10) {
+                real_hour = "0" + init_hour;
+            } else {
+                real_hour = Integer.toString(init_hour);
+            }
+
+            if (init_min < 10) {
+                real_min = "0" + init_min;
+            } else {
+                real_min = Integer.toString(init_min);
+            }
+
+            if (init_sec < 10) {
+                real_sec = "0" + init_sec;
+            } else {
+                real_sec = Integer.toString(init_sec);
+            }
+
+            nowDate = nowDate + real_hour + real_min + real_sec;
             System.out.println(nowDate.length());
             System.out.println("현재 날짜 및 시간 " + nowDate);
 
             if (tmpReal.equals("업데이트 정보 없음")) {
-                // 예상 실행 시간이 현재 시간을 지났는데도 업데이트 정보가 없는 것 => 빨간색
+                // 현재 시간 > 예상 실행 시간
                 // nowDate  > tmpPre 일때
 
                 System.out.println("현재 날짜 및 시간 숫자 " + Long.parseLong(nowDate));
@@ -114,10 +135,6 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
                     holder.status.setTextColor(Color.RED);
                 }
 
-                // nowDate.compareTo(tmpPre)
-                // nowDate > tmpPre 이면 결과 > 0
-                // nowDate < tmpPre 이면 결과 < 0
-                // nowDate == tmpPre 이면 결과 == 0
             }
         }
     }
