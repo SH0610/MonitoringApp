@@ -57,7 +57,7 @@ public class ErrorCatchConnection {
             jTObj_send2.put("body", jBObj_send2); // body
 
             sJson = jTObj_send2.toString();
-            System.out.println("POST 내용 (ERROR) : " + sJson);
+            System.out.println("POST 내용 (ErrorCatch) : " + sJson);
 
         } catch (JSONException e) {
             e.printStackTrace();

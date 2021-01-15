@@ -21,7 +21,7 @@ public class SchedulerConnection {
 
     private static String schedulerData;
 
-    public static void getSchedulerData(String STARTDT, String ENDDT) {
+    public static String getSchedulerData(String STARTDT, String ENDDT) {
         StringBuffer stringBuffer_sc = new StringBuffer();
         String resultCode = null;
 
@@ -105,6 +105,8 @@ public class SchedulerConnection {
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
 
+            resultCode = object1.getString("RETURNCD"); // 응답코드
+
             schedulerList.clear();
             for (int i = 0; i < jsonArray2.length(); i++) {
                 String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec; // 실제
@@ -154,6 +156,6 @@ public class SchedulerConnection {
             System.out.println(e);
             e.printStackTrace();
         }
-//        return resultCode;
+        return resultCode;
     }
 }

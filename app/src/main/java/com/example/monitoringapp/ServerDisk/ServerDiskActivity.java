@@ -29,6 +29,7 @@ public class ServerDiskActivity extends AppCompatActivity {
     private Button btn_filter, btn_back;
     private boolean hideBtnClicked = false;
     private TextView server_disk_label;
+    private String resultCode = null;
 
     public static ArrayList<ServerDiskItem> serverDiskList = new ArrayList<>(); // 서버 디스크 목록 가져오기 (ip, remark)
     private Button btn_searchDisk;
@@ -93,11 +94,6 @@ public class ServerDiskActivity extends AppCompatActivity {
         spinner.setAdapter(serverDiskSpinnerAdapter);
         spinner.setSelection(spinner.getCount());
 
-
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, item_serverDisk);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -120,10 +116,22 @@ public class ServerDiskActivity extends AppCompatActivity {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(layoutManager);
 
-                ServerDiskConnection.getServerDisk(sd_AGCD);
-                ServerDiskAdapter serverDiskAdapter = new ServerDiskAdapter(serverDiskList);
-                recyclerView.setAdapter(serverDiskAdapter);
-                recyclerView.getAdapter().notifyDataSetChanged();
+                resultCode = ServerDiskConnection.getServerDisk(sd_AGCD);
+
+                if (resultCode.equals("00")) {
+                    ServerDiskAdapter serverDiskAdapter = new ServerDiskAdapter(serverDiskList);
+                    recyclerView.setAdapter(serverDiskAdapter);
+                    recyclerView.getAdapter().notifyDataSetChanged();
+
+                    if (serverDiskList.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (resultCode.equals("01")) {
+                    Toast.makeText(getApplicationContext(), "입력값 오류", Toast.LENGTH_SHORT).show();
+                } else if (resultCode.equals("99")) {
+                    Toast.makeText(getApplicationContext(), "시스템 에러", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

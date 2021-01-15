@@ -34,6 +34,7 @@ public class SchedulerActivity extends AppCompatActivity {
 
     private String STARTDT = null;
     private String ENDDT = null;
+    private String resultCode = null;
 
     private int mStartYear, mStartMonth, mStartDay, mEndYear, mEndMonth, mEndDay;
 
@@ -233,10 +234,22 @@ public class SchedulerActivity extends AppCompatActivity {
                 STARTDT = tv_start.getText().toString();
                 ENDDT = tv_end.getText().toString();
 
-                SchedulerConnection.getSchedulerData(STARTDT, ENDDT);
-                SchedulerAdapter schedulerAdapter = new SchedulerAdapter(schedulerList);
-                recyclerView.setAdapter(schedulerAdapter);
-                recyclerView.getAdapter().notifyDataSetChanged();
+                resultCode = SchedulerConnection.getSchedulerData(STARTDT, ENDDT);
+
+                System.out.println("resultcOde" + resultCode);
+                if (resultCode.equals("00")) {
+                    SchedulerAdapter schedulerAdapter = new SchedulerAdapter(schedulerList);
+                    recyclerView.setAdapter(schedulerAdapter);
+                    recyclerView.getAdapter().notifyDataSetChanged();
+
+                    if (schedulerList.isEmpty()) { // 데이터가 없을 경우
+                        Toast.makeText(getApplicationContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (resultCode.equals("01")) {
+                    Toast.makeText(getApplicationContext(), "입력값 오류", Toast.LENGTH_SHORT).show();
+                } else if (resultCode.equals("99")) {
+                    Toast.makeText(getApplicationContext(), "시스템 에러", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -20,7 +20,9 @@ public class ServerDiskConnection {
     private static String serverDiskData;
 
 
-    public static void getServerDisk(String AGCD) {
+    public static String getServerDisk(String AGCD) {
+        String resultCode = null;
+
         StringBuffer stringBuffer_sd = new StringBuffer();
 
         URL url = null;
@@ -101,6 +103,8 @@ public class ServerDiskConnection {
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
 
+            resultCode = object1.getString("RETURNCD");
+
             serverDiskList.clear();
             for (int i = 0; i < jsonArray2.length(); i++) {
                 String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
@@ -130,5 +134,6 @@ public class ServerDiskConnection {
             System.out.println(e);
             e.printStackTrace();
         }
+        return resultCode;
     }
 }
