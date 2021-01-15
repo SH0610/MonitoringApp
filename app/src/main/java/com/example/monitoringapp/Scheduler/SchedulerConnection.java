@@ -2,8 +2,6 @@ package com.example.monitoringapp.Scheduler;
 
 import android.util.Log;
 
-import com.example.monitoringapp.ServerDisk.ServerDiskItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

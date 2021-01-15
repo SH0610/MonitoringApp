@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.monitoringapp.R;
-import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.databinding.ActivityErrorCatchBinding;
 
 import java.text.SimpleDateFormat;
@@ -179,10 +176,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         btn_search = binding.errorCatchBtn;
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,8 +191,10 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     ErrorAdapter errorAdapter = new ErrorAdapter(errorList);
                     recyclerView.setAdapter(errorAdapter);
                     recyclerView.getAdapter().notifyDataSetChanged();
-//                    Intent intent = new Intent(getApplicationContext(), ErrorInfoActivity.class);
-//                    startActivity(intent);
+
+                    if (errorList.isEmpty()) { // 데이터가 없을 경우
+                        Toast.makeText(getApplicationContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else if (resultCode.equals("01")) {
                     Toast.makeText(getApplicationContext(), "입력값 오류", Toast.LENGTH_SHORT).show();
@@ -221,8 +216,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     tv_divider.setVisibility(view.GONE);
                     tv_end.setVisibility(view.GONE);
                     btn_search.setVisibility(view.GONE);
-//                    btn_week.setVisibility(view.GONE);
-//                    btn_month.setVisibility(view.GONE);
                 } else { // 두번 클릭
                     hideBtnClicked = false;
                     tv_error_catch_label.setVisibility(view.VISIBLE);
@@ -230,8 +223,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     tv_divider.setVisibility(view.VISIBLE);
                     tv_end.setVisibility(view.VISIBLE);
                     btn_search.setVisibility(view.VISIBLE);
-//                    btn_week.setVisibility(view.VISIBLE);
-//                    btn_month.setVisibility(view.VISIBLE);
                 }
             }
         });

@@ -2,9 +2,6 @@ package com.example.monitoringapp.ErrorCatch;
 
 import android.util.Log;
 
-import com.example.monitoringapp.Login.LoginInfoItem;
-import com.example.monitoringapp.Scheduler.SchedulerItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +14,6 @@ import java.net.URL;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 import static com.example.monitoringapp.ErrorCatch.ErrorCatchActivity.errorList;
-import static com.example.monitoringapp.Scheduler.SchedulerActivity.schedulerList;
 
 public class ErrorCatchConnection {
 
@@ -118,12 +114,10 @@ public class ErrorCatchConnection {
             resultCode = object1.getString("RETURNCD");
             System.out.println("result : " + resultCode);
 
-            System.out.println("test : " + jsonArray2.getJSONObject(0).getString("AGCD"));
-
             errorList.clear();
-            
-            String date = null, time = null; // 실제
             for (int i = 0; i < jsonArray2.length(); i++) {
+                String date = null, time = null; // 실제
+
                 String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec; // 실제
 
                 forParsingDate = jsonArray2.getJSONObject(i).getString("ERRDT");
@@ -142,10 +136,9 @@ public class ErrorCatchConnection {
 
                 date = parse_year + "-" + parse_month + "-" + parse_day;
                 time = parse_hour + ":" + parse_min + ":" + parse_sec;
+
+                errorList.add(new ErrorItem(jsonArray2.getJSONObject(0).getString("AGNM"), jsonArray2.getJSONObject(0).getString("SVCCD"), jsonArray2.getJSONObject(0).getString("SVCNM"), jsonArray2.getJSONObject(0).getString("SEQ"), jsonArray2.getJSONObject(0).getString("ECD"), jsonArray2.getJSONObject(0).getString("ERR_MSG"), date, time, jsonArray2.getJSONObject(0).getString("COMFG"), jsonArray2.getJSONObject(0).getString("COM_MSG"), jsonArray2.getJSONObject(0).getString("ENTDT"), jsonArray2.getJSONObject(0).getString("ENTTM"), jsonArray2.getJSONObject(0).getString("REPORTDT"), jsonArray2.getJSONObject(0).getString("REPORTTM"), jsonArray2.getJSONObject(0).getString("UPDDT"), jsonArray2.getJSONObject(0).getString("UPDTM")));
             }
-
-            errorList.add(new ErrorItem(jsonArray2.getJSONObject(0).getString("AGNM"), jsonArray2.getJSONObject(0).getString("SVCCD"), jsonArray2.getJSONObject(0).getString("SVCNM"), jsonArray2.getJSONObject(0).getString("SEQ"), jsonArray2.getJSONObject(0).getString("ECD"), jsonArray2.getJSONObject(0).getString("ERR_MSG"), date, time, jsonArray2.getJSONObject(0).getString("COMFG"), jsonArray2.getJSONObject(0).getString("COM_MSG"), jsonArray2.getJSONObject(0).getString("ENTDT"), jsonArray2.getJSONObject(0).getString("ENTTM"), jsonArray2.getJSONObject(0).getString("REPORTDT"), jsonArray2.getJSONObject(0).getString("REPORTTM"), jsonArray2.getJSONObject(0).getString("UPDDT"), jsonArray2.getJSONObject(0).getString("UPDTM")));
-
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
