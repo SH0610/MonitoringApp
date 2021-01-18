@@ -50,6 +50,10 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
             holder.status.setBackgroundColor(Color.parseColor("#FFC0CB"));
             holder.status.setTextColor(Color.RED);
             holder.status.setText("미처리");
+        } else { // 완료이면 처리
+            holder.status.setBackgroundColor(Color.parseColor("#BDECB6"));
+            holder.status.setTextColor(Color.parseColor("#008000"));
+            holder.status.setText("처리");
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +65,11 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
                 String item_service = mDataList.get(position).getSvcnm();
                 String item_errdt = mDataList.get(position).getErrdt();
                 String item_errtm = mDataList.get(position).getErrtm();
-                String item_errmsg = mDataList.get(position).getErr_msg();
+                String item_errmsg = mDataList.get(position).getErr_msg(); // 에러메시지
+                String item_status = mDataList.get(position).getComfg(); // 처리여부
+                String item_svccd = mDataList.get(position).getSvccd(); // 서비스코드
+                String item_seq = mDataList.get(position).getSeq(); // seq
+                String item_commsg = mDataList.get(position).getCom_msg();
 
                 Intent intent = new Intent(mContext, ErrorInfoActivity.class);
                 intent.putExtra("account", item_account);
@@ -69,6 +77,10 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
                 intent.putExtra("errdt", item_errdt);
                 intent.putExtra("errtm", item_errtm);
                 intent.putExtra("errmsg", item_errmsg);
+                intent.putExtra("status", item_status);
+                intent.putExtra("svccd", item_svccd);
+                intent.putExtra("seq", item_seq);
+                intent.putExtra("commsg", item_commsg);
                 mContext.startActivity(intent);
             }
         });

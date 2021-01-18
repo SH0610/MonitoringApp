@@ -137,7 +137,7 @@ public class ErrorCatchConnection {
                 date = parse_year + "-" + parse_month + "-" + parse_day;
                 time = parse_hour + ":" + parse_min + ":" + parse_sec;
 
-                errorList.add(new ErrorItem(jsonArray2.getJSONObject(0).getString("AGNM"), jsonArray2.getJSONObject(0).getString("SVCCD"), jsonArray2.getJSONObject(0).getString("SVCNM"), jsonArray2.getJSONObject(0).getString("SEQ"), jsonArray2.getJSONObject(0).getString("ECD"), jsonArray2.getJSONObject(0).getString("ERR_MSG"), date, time, jsonArray2.getJSONObject(0).getString("COMFG"), jsonArray2.getJSONObject(0).getString("COM_MSG"), jsonArray2.getJSONObject(0).getString("ENTDT"), jsonArray2.getJSONObject(0).getString("ENTTM"), jsonArray2.getJSONObject(0).getString("REPORTDT"), jsonArray2.getJSONObject(0).getString("REPORTTM"), jsonArray2.getJSONObject(0).getString("UPDDT"), jsonArray2.getJSONObject(0).getString("UPDTM")));
+                errorList.add(new ErrorItem(jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCCD"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("SEQ"), jsonArray2.getJSONObject(i).getString("ECD"), jsonArray2.getJSONObject(i).getString("ERR_MSG"), date, time, jsonArray2.getJSONObject(i).getString("COMFG"), jsonArray2.getJSONObject(i).getString("COM_MSG"), jsonArray2.getJSONObject(i).getString("ENTDT"), jsonArray2.getJSONObject(i).getString("ENTTM"), jsonArray2.getJSONObject(i).getString("REPORTDT"), jsonArray2.getJSONObject(i).getString("REPORTTM"), jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM")));
             }
         } catch (JSONException e) {
             System.out.println(e);

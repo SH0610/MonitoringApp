@@ -138,7 +138,7 @@
 
             <LinearLayout
                 android:id="@+id/error_info_label_linearlayout"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="40dp"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,17 +156,20 @@
                     android:text="처리 여부 " />
 
                 <RadioGroup
+                    android:id="@+id/error_info_radio_group"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
                     <RadioButton
+                        android:id="@+id/error_info_radio_yes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="YES" />
 
                     <RadioButton
+                        android:id="@+id/error_info_radio_no"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -188,8 +191,9 @@
                 android:id="@+id/error_info_et_memo"
                 android:layout_below="@+id/error_info_label_memo"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+
                 android:hint="메시지를 입력하세요." />
 
             <Button
