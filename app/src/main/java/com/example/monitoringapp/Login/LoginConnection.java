@@ -127,8 +127,6 @@ public class LoginConnection {
             e.printStackTrace();
         }
 
-
-        
         return resultCode;
     }
 }

@@ -2,40 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_moeunnet_square"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/main_btn_service"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="서비스 실행 여부 조회" />
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/main_btn_disk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="서버 디스크 용량 확인" />
+        <TextView
+            android:id="@+id/main_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            tools:text="이름" />
 
-    <Button
-        android:id="@+id/main_btn_scheduler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="스케줄러 관리" />
+        <TextView
+            android:id="@+id/main_tv_name_label"
+            android:layout_toRightOf="@+id/main_tv_name"
+            android:layout_toEndOf="@+id/main_tv_name"
+            android:layout_alignBaseline="@+id/main_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:text=" 님 안녕하세요!" />
 
-    <Button
-        android:id="@+id/main_btn_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="오류 처리 결과" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/main_tv_id"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        tools:text="로그인 아이디" />
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/main_btn_service"
+                android:background="@drawable/custom_moeunnet_button"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:textSize="17sp"
+                android:text="서비스 실행 여부 조회" />
+
+            <Button
+                android:id="@+id/main_btn_disk"
+                android:background="@drawable/custom_moeunnet_button"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:textSize="17sp"
+                android:text="서버 디스크 용량 확인" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/main_btn_scheduler"
+                android:background="@drawable/custom_moeunnet_button"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:textSize="17sp"
+                android:text="스케줄러 관리" />
+
+            <Button
+                android:id="@+id/main_btn_error"
+                android:background="@drawable/custom_moeunnet_button"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:textSize="17sp"
+                android:text="오류 처리 결과" />
+
+        </TableRow>
+
+
+
+
+
+    </TableLayout>
+
+
+
 
 </LinearLayout>

@@ -20,7 +20,7 @@ import com.example.monitoringapp.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_service, btn_disk, btn_scheduler, btn_error;
-    private TextView tv_id;
+    private TextView tv_name, tv_id;
     ActivityMainBinding binding;
 
     @Override
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
-        btn_service = findViewById(R.id.main_btn_service);
+        btn_service = binding.mainBtnService;
         btn_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_disk = findViewById(R.id.main_btn_disk);
+        btn_disk = binding.mainBtnDisk;
         btn_disk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_scheduler = findViewById(R.id.main_btn_scheduler);
+        btn_scheduler = binding.mainBtnScheduler;
         btn_scheduler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_error = findViewById(R.id.main_btn_error);
+        btn_error = binding.mainBtnError;
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,8 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tv_id = binding.mainTvId;
+//        tv_id = binding.mainTvId;
         SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
-        tv_id.setText(sharedPreferences.getString("id", "NO ID"));
+//        tv_id.setText(sharedPreferences.getString("id", "NO ID"));
+
+        tv_name = binding.mainTvName;
+        tv_name.setText(sharedPreferences.getString("name", "NO NAME"));
     }
 }

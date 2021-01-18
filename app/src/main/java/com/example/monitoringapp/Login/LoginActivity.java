@@ -16,6 +16,7 @@ import com.example.monitoringapp.R;
 import com.example.monitoringapp.databinding.ActivityLoginBinding;
 
 import static com.example.monitoringapp.Login.LoginConnection.login_id;
+import static com.example.monitoringapp.Login.LoginConnection.login_name;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("id", login_id);
+                    editor.putString("name", login_name);
                     editor.apply(); // 아이디 저장
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
