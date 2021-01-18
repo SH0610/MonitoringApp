@@ -1,5 +1,7 @@
 package com.example.monitoringapp.ErrorCatch;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +18,10 @@ import java.util.ArrayList;
 public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> {
 
     private final ArrayList<ErrorItem> mDataList;
+    private Context mContext;
 
-    public ErrorAdapter(ArrayList<ErrorItem> mDataList) {
+    public ErrorAdapter(Context context, ArrayList<ErrorItem> mDataList) {
+        this.mContext = context;
         this.mDataList = mDataList;
     }
 
@@ -29,7 +33,7 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         ErrorItem errorItem = mDataList.get(position);
 
         holder.error_date.setText(errorItem.getErrdt());
@@ -47,6 +51,27 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
             holder.status.setTextColor(Color.RED);
             holder.status.setText("미처리");
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext = view.getContext();
+
+                String item_account = mDataList.get(position).getAgnm();
+                String item_service = mDataList.get(position).getSvcnm();
+                String item_errdt = mDataList.get(position).getErrdt();
+                String item_errtm = mDataList.get(position).getErrtm();
+                String item_errmsg = mDataList.get(position).getErr_msg();
+
+                Intent intent = new Intent(mContext, ErrorInfoActivity.class);
+                intent.putExtra("account", item_account);
+                intent.putExtra("service", item_service);
+                intent.putExtra("errdt", item_errdt);
+                intent.putExtra("errtm", item_errtm);
+                intent.putExtra("errmsg", item_errmsg);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -54,11 +79,11 @@ public class ErrorAdapter extends RecyclerView.Adapter<ErrorAdapter.ViewHolder> 
         return mDataList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView error_date, error_time, status, account, service;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             error_date = itemView.findViewById(R.id.item_error_tv_date);
             error_time = itemView.findViewById(R.id.item_error_tv_time_real);

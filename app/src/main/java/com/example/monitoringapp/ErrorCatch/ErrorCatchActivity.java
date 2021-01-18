@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -188,9 +189,22 @@ public class ErrorCatchActivity extends AppCompatActivity {
 
                 if (resultCode.equals("00")) {
 
-                    ErrorAdapter errorAdapter = new ErrorAdapter(errorList);
+                    ErrorAdapter errorAdapter = new ErrorAdapter(getApplicationContext(), errorList);
                     recyclerView.setAdapter(errorAdapter);
                     recyclerView.getAdapter().notifyDataSetChanged();
+
+//                    // 리사이클러뷰에는 따로 온아이템클릭리스너가 없어서 따로 어댑터에 구현해야한다
+//                    // 5) 리사이클러 어댑터에는 셋온클릭리스너 있당
+//                    errorAdapter.setOnItemClickListener(new ErrorAdapter.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClicked(View v, int pos) {
+//                            // TODO : 아이템 클릭 이벤트를 MainActivity에서 처리
+//                            Toast.makeText(getApplicationContext(), " " + pos, Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(getApplicationContext(), ErrorInfoActivity.class);
+//                            intent.putExtra("TEXT", pos);
+//                            startActivity(intent);
+//                        }
+//                    });
 
                     if (errorList.isEmpty()) { // 데이터가 없을 경우
                         Toast.makeText(getApplicationContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -226,7 +240,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 }

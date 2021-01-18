@@ -138,6 +138,7 @@
 
             <LinearLayout
                 android:id="@+id/error_info_label_linearlayout"
+                android:layout_marginTop="15dp"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
