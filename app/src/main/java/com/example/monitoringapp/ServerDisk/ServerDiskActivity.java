@@ -140,7 +140,7 @@ public class ServerDiskActivity extends AppCompatActivity {
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (hideBtnClicked == false) { // 한번 클릭
+                if (!hideBtnClicked) { // 한번 클릭
                     hideBtnClicked = true;
                     spinner.setVisibility(view.GONE);
                     server_disk_label.setVisibility(view.GONE);

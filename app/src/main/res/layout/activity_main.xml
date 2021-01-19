@@ -19,7 +19,8 @@
             android:id="@+id/main_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
             tools:text="이름" />
 
         <TextView
@@ -30,12 +31,89 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
+            android:textColor="@android:color/black"
             android:text=" 님 안녕하세요!" />
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/custom_moeunnet_button" >
+
+            <TextView
+                android:id="@+id/main_tv_scheduler"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                tools:text="서비스 실행 수" />
+
+            <TextView
+                android:id="@+id/main_tv_scheduler_label"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:text="서비스 실행 " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/custom_moeunnet_button" >
+
+            <TextView
+                android:id="@+id/main_tv_error"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                tools:text="오류 수" />
+
+            <TextView
+                android:id="@+id/main_tv_error_label"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:text="오류 실행 " />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
     <TableLayout
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="*">
@@ -46,8 +124,13 @@
                 android:id="@+id/main_btn_service"
                 android:background="@drawable/custom_moeunnet_button"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:textSize="17sp"
                 android:text="서비스 실행 여부 조회" />
@@ -56,8 +139,13 @@
                 android:id="@+id/main_btn_disk"
                 android:background="@drawable/custom_moeunnet_button"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:textSize="17sp"
                 android:text="서버 디스크 용량 확인" />
@@ -70,8 +158,13 @@
                 android:id="@+id/main_btn_scheduler"
                 android:background="@drawable/custom_moeunnet_button"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:textSize="17sp"
                 android:text="스케줄러 관리" />
@@ -80,8 +173,13 @@
                 android:id="@+id/main_btn_error"
                 android:background="@drawable/custom_moeunnet_button"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:textSize="17sp"
                 android:text="오류 처리 결과" />

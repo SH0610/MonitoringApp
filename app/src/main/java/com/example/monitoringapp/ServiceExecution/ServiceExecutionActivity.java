@@ -49,8 +49,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     StringBuffer stringBuffer = new StringBuffer();
     private String accountSearchData;
 
-    public static String forTest;
-
     public static String se_AGCD; // 대리점코드
     public static String se_AGNM; // 대리점이름
 
@@ -189,7 +187,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 //            String test3 = object2.getString("AGCD"); // 필요한 데이터
 //
 //            String test4 = object2.getString("AGNM"); // 필요한 데이터
-//            forTest = test3;
 
             System.out.println("type : " + test1); // type : 01
             System.out.println("returncd : " + test2); // returncd : 00
@@ -284,7 +281,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         btn_hide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (hideBtnClicked == false) { // 한번 클릭
+                if (!hideBtnClicked) { // 한번 클릭
                     hideBtnClicked = true;
                     spinner1.setVisibility(view.GONE);
                     spinner2.setVisibility(view.GONE);

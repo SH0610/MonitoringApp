@@ -20,7 +20,7 @@ import com.example.monitoringapp.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_service, btn_disk, btn_scheduler, btn_error;
-    private TextView tv_name, tv_id;
+    private TextView tv_name, tv_id, tv_scheduler, tv_error;
     ActivityMainBinding binding;
 
     @Override
@@ -67,11 +67,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        tv_id = binding.mainTvId;
         SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
-//        tv_id.setText(sharedPreferences.getString("id", "NO ID"));
 
         tv_name = binding.mainTvName;
         tv_name.setText(sharedPreferences.getString("name", "NO NAME"));
+
+        tv_scheduler = binding.mainTvScheduler;
+        tv_scheduler.setText("HI");
+
+        tv_error = binding.mainTvError;
+        tv_error.setText("HI");
     }
 }
