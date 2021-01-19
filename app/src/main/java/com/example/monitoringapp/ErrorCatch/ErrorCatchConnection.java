@@ -41,9 +41,7 @@ public class ErrorCatchConnection {
 
         try {
             // POST
-
-            // header
-            jHObj_send2.put("TYPE", "05");
+            jHObj_send2.put("TYPE", "05"); // header
 
             // body
             jBObj_send2.put("AGCD", "");

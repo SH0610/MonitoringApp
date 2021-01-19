@@ -226,19 +226,7 @@ public class ServiceSearchConnection {
             System.out.println("jsonarray2 길이service " + jsonArray2.length());
 
             System.out.println("jsonobject1 길이service " + object1.length());
-//            System.out.println("jsonobject2 길이service " + object2.length());
 
-            String test1 = object1.getString("TYPE");
-            String test2 = object1.getString("RETURNCD");
-
-//            String test3 = object2.getString("AGCD");
-//
-//            String test4 = object2.getString("AGNM"); // 필요한 데이터
-//
-//            System.out.println(test1); // type : 01
-//            System.out.println(test2); // returncd : 00
-//            System.out.println(test3); // agcd : anx
-//            System.out.println(test4); // agnm : 에넥스텔레콤
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();

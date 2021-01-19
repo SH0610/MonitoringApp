@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Main.MainActivity">
 
     <RelativeLayout
         android:layout_marginTop="100dp"
@@ -56,23 +56,23 @@
             android:background="@drawable/custom_moeunnet_button" >
 
             <TextView
-                android:id="@+id/main_tv_scheduler"
+                android:id="@+id/main_tv_scheduler_label"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="17sp"
+                android:textSize="20sp"
                 android:textColor="@android:color/black"
-                tools:text="서비스 실행 수" />
+                android:text="서비스 실행 " />
 
             <TextView
-                android:id="@+id/main_tv_scheduler_label"
+                android:id="@+id/main_tv_scheduler"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"
-                android:text="서비스 실행 " />
+                tools:text="0" />
 
         </LinearLayout>
 
@@ -89,23 +89,23 @@
             android:background="@drawable/custom_moeunnet_button" >
 
             <TextView
-                android:id="@+id/main_tv_error"
+                android:id="@+id/main_tv_error_label"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="17sp"
+                android:textSize="20sp"
                 android:textColor="@android:color/black"
-                tools:text="오류 수" />
+                android:text="오류 실행 " />
 
             <TextView
-                android:id="@+id/main_tv_error_label"
+                android:id="@+id/main_tv_error"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"
-                android:text="오류 실행 " />
+                tools:text="1" />
 
         </LinearLayout>
 

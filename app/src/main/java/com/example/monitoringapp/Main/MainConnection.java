@@ -1,4 +1,4 @@
-package com.example.monitoringapp.Login;
+package com.example.monitoringapp.Main;
 
 import android.util.Log;
 
@@ -11,22 +11,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 
-public class LoginConnection {
+public class MainConnection {
+    private static String mainData;
+    public static String errorCnt, scheduleCnt;
 
-    private static String loginData;
-//    public static ArrayList<LoginInfoItem> loginInfoList = new ArrayList<>();
-    public static String login_id, login_name;
-
-    public static String getLogin(String id, String pw) {
-
+    public static String getMainData(String STARTDT, String ENDDT) {
+        StringBuffer stringBuffer_sc = new StringBuffer();
         String resultCode = null;
 
-        StringBuffer stringBuffer = new StringBuffer();
-        
         URL url = null;
         HttpURLConnection conn_Url = null;
         String sTarget_url = ""; //호출할 url
@@ -34,29 +29,28 @@ public class LoginConnection {
 
         sTarget_url = BASE_URL; //호출할 url
 
-        JSONObject jHObj_send2 = new JSONObject();
-        JSONObject jBObj_send2 = new JSONObject();
-        JSONObject jTObj_send2 = new JSONObject();
-        jHObj_send2 = new JSONObject();
-        jBObj_send2 = new JSONObject();
+        Log.d("TARGET URL : ", sTarget_url);
 
-        jTObj_send2 = new JSONObject();
+        //전달 데이터 (json)
+        JSONArray jHArr_send = new JSONArray();
+        JSONArray jBArr_send = new JSONArray();
+        JSONObject jHObj_send = new JSONObject();
+        JSONObject jBObj_send = new JSONObject();
+        JSONObject jTObj_send = new JSONObject();
+
+        String parseSTARTDT = STARTDT.replace("-", "");
+        String parseENDDT = ENDDT.replace("-", "");
 
         try {
-            // POST
+            jHObj_send.put("TYPE", "08");
+            jBObj_send.put("STARTDT", parseSTARTDT);
+            jBObj_send.put("ENDDT", parseENDDT);
 
-            // header
-            jHObj_send2.put("TYPE", "07");
+            jTObj_send.put("header", jHObj_send);
+            jTObj_send.put("body", jBObj_send);
 
-            // body
-            jBObj_send2.put("BID", id);
-            jBObj_send2.put("PW", pw);
-
-            jTObj_send2.put("header", jHObj_send2); // header
-            jTObj_send2.put("body", jBObj_send2); // body
-
-            sJson = jTObj_send2.toString();
-            System.out.println("POST 내용 (LOGIN) : " + sJson);
+            sJson = jTObj_send.toString();
+            System.out.println(sJson);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,14 +78,14 @@ public class LoginConnection {
             while ((line = br.readLine()) != null) {
                 sJson_get = line;
                 System.out.println(line);
-                stringBuffer.append(line);
+                stringBuffer_sc.append(line);
             }
 
             Log.d("RESPONSE", sJson_get);
             System.out.println("hi" + sJson_get);
-            loginData = stringBuffer.toString();
+            mainData = stringBuffer_sc.toString();
 
-            System.out.println("받은 데이터 (서비스) 조회) : " + loginData);
+            System.out.println("받은 데이터 (메인 조회) : " + mainData);
 
             // 닫기
             osw.close();
@@ -102,28 +96,24 @@ public class LoginConnection {
 
         try {
             // 응답 JSON 파싱
-            JSONObject receiveJSONObject = new JSONObject(loginData);
+            JSONObject receiveJSONObject = new JSONObject(mainData);
             // header : Array
             JSONArray jsonArray1 = receiveJSONObject.getJSONArray("header");
             // body : Array
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
-            JSONObject object1 = jsonArray1.getJSONObject(0); // returncd (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(0); // body
-            JSONObject object2 = null; // body
+            JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
 
-            resultCode = object1.getString("RETURNCD");
-            System.out.println("result : " + resultCode);
+            resultCode = object1.getString("RETURNCD"); // 응답코드
 
-            if (resultCode.equals("00")) {
-                login_id = jsonArray2.getJSONObject(0).getString("BID");
-                login_name = jsonArray2.getJSONObject(0).getString("BNM");
-            }
+
+            errorCnt = jsonArray2.getJSONObject(0).getString("HISTORY_CNT");
+            scheduleCnt = jsonArray2.getJSONObject(0).getString("SCHEDULE_CNT");
+
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
         }
-
         return resultCode;
     }
 }

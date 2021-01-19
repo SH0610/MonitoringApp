@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.monitoringapp.Login.LoginActivity;
+import com.example.monitoringapp.Main.MainConnection;
 
 public class SplashActivity extends AppCompatActivity {
 

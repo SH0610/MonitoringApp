@@ -41,7 +41,7 @@
             android:name=".ServiceExecution.ServiceExecutionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main.MainActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

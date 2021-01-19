@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -57,7 +56,6 @@ public class ServerDiskActivity extends AppCompatActivity {
         item_serverDisk.clear();
         item_serverDiskCode.clear();
 
-//        item_serverDisk.add("전체 보기");
         item_serverDisk.add("에넥스텔레콤");
         item_serverDisk.add("ACN코리아");
         item_serverDisk.add("한국케이블텔레콤");
@@ -66,7 +64,6 @@ public class ServerDiskActivity extends AppCompatActivity {
         item_serverDisk.add("웰네트웍스");
         item_serverDisk.add("거래처를 선택해주세요.");
 
-//        item_serverDiskCode.add("전체 보기");
         item_serverDiskCode.add("ANX");
         item_serverDiskCode.add("ACN");
         item_serverDiskCode.add("KCT");

@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
@@ -59,33 +58,6 @@ public class SchedulerActivity extends AppCompatActivity {
         tv_divider = binding.schedulerDateTvDivider;
 
         tv_start = binding.schedulerDateTvStart;
-//        // 초기 날짜 (미리 지정되어있음)
-//        long now = System.currentTimeMillis();
-//        Date mDate = new Date(now);
-//        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("y");
-//        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("MM");
-//        SimpleDateFormat simpleDateFormat3 = new SimpleDateFormat("dd");
-//
-//        int init_year = Integer.parseInt(simpleDateFormat1.format(mDate));
-//        int init_month = Integer.parseInt(simpleDateFormat2.format(mDate));
-//        int init_day = Integer.parseInt(simpleDateFormat3.format(mDate));
-//
-//        System.out.println("년도 : " + init_year + " 월 : " + init_month + " 일 : " + init_day);
-//
-//        String st_init_month = null;
-//        String st_init_day = null;
-//
-//        if (init_month < 10) {
-//            st_init_month = "0" + Integer.toString(init_month);
-//        } else {
-//            st_init_month = Integer.toString(init_month);
-//        }
-//        if (init_day < 10) {
-//            st_init_day = "0" + Integer.toString(init_day);
-//        }
-//        else {
-//            st_init_day = Integer.toString(init_day);
-//        }
 
         final String init_dt = getTodayDate();
 

@@ -1,6 +1,5 @@
 package com.example.monitoringapp.Scheduler;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import com.example.monitoringapp.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
 public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.ViewHolder>{
 
@@ -82,22 +83,7 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
 
             System.out.println("년도 : " + init_year + " 월 : " + init_month + " 일 : " + init_day);
 
-            String st_init_month = null;
-            String st_init_day = null;
-
-            if (init_month < 10) {
-                st_init_month = "0" + Integer.toString(init_month);
-            } else {
-                st_init_month = Integer.toString(init_month);
-            }
-            if (init_day < 10) {
-                st_init_day = "0" + Integer.toString(init_day);
-            }
-            else {
-                st_init_day = Integer.toString(init_day);
-            }
-
-            final String init_dt = Integer.toString(init_year) + "-" + st_init_month + "-" + st_init_day;
+            final String init_dt = getTodayDate();
             String nowDate = init_dt.replaceAll("-", "");
 
             String real_hour, real_min, real_sec;

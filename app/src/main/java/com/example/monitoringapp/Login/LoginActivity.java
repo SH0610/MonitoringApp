@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.monitoringapp.MainActivity;
-import com.example.monitoringapp.R;
+import com.example.monitoringapp.Main.MainActivity;
 import com.example.monitoringapp.databinding.ActivityLoginBinding;
 
 import static com.example.monitoringapp.Login.LoginConnection.login_id;
@@ -42,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println(et_id.getText().toString() + "비번" + et_pw.getText().toString());
 
-                String code = LoginConnection.getLogin(et_id.getText().toString(), et_pw.getText().toString());
-                if (code.equals("00")) { // 정상
+                String resultCode = LoginConnection.getLogin(et_id.getText().toString(), et_pw.getText().toString());
+                if (resultCode.equals("00")) { // 정상
                     SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("id", login_id);
@@ -54,25 +53,23 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                else if (code.equals("01")) {
+                else if (resultCode.equals("01")) {
                     Toast.makeText(getApplicationContext(), "입력값 오류", Toast.LENGTH_SHORT).show();
                 }
-                else if (code.equals("02")) {
+                else if (resultCode.equals("02")) {
                     Toast.makeText(getApplicationContext(), "사용불가 아이디", Toast.LENGTH_SHORT).show();
                     et_id.getText().clear();
                     et_pw.getText().clear();
                 }
-                else if (code.equals("03")) {
+                else if (resultCode.equals("03")) {
                     Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                     et_id.getText().clear();
                     et_pw.getText().clear();
                 }
-                else if (code.equals("99")) {
+                else if (resultCode.equals("99")) {
                     Toast.makeText(getApplicationContext(), "시스템 에러", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 }

@@ -101,7 +101,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         try {
             jHObj_send.put("TYPE", "01");
 //            jHArr_send.put(jHObj_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
-//            jBObj_send.put("mdn", sMdn); 일단 무조건 빼기
             jBArr_send.put(jBObj_send);
 
 //            jTObj_send.put("header", jHArr_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
@@ -184,14 +183,9 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             String test1 = object1.getString("TYPE");
             String test2 = object1.getString("RETURNCD");
 
-//            String test3 = object2.getString("AGCD"); // 필요한 데이터
-//
-//            String test4 = object2.getString("AGNM"); // 필요한 데이터
 
             System.out.println("type : " + test1); // type : 01
             System.out.println("returncd : " + test2); // returncd : 00
-//            System.out.println("agcd : " + test3); // agcd : anx
-//            System.out.println("agnm : " + test4); // agnm : 에넥스텔레콤
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
