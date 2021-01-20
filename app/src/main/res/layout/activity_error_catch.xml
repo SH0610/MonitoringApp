@@ -37,7 +37,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:textColor="@android:color/white"
-                    android:text="에러 확인"
+                    android:text="에러 이력 조회"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"

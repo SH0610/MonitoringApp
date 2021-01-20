@@ -24,6 +24,6 @@
         android:id="@+id/menu_error"
         android:icon="@drawable/ic_launcher_foreground"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:title="이력 조회" />
+        android:title="에러 이력 조회" />
 
 </menu>
