@@ -1,18 +1,30 @@
 package com.example.monitoringapp.ErrorCatch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.monitoringapp.R;
+import com.example.monitoringapp.Scheduler.SchedulerActivity;
+import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
+import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
 import com.example.monitoringapp.databinding.ActivityErrorCatchBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +33,8 @@ import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
 public class ErrorCatchActivity extends AppCompatActivity {
 
-    private Button btn_back, btn_search, btn_hide;
+    private Button btn_search, btn_menu;
+    private LinearLayout layout_btn_filter;
     private TextView tv_error_catch_label; // 오류 처리 결과 (제목)
     private TextView tv_start, tv_end, tv_divider;
     private boolean hideBtnClicked = false;
@@ -36,17 +49,63 @@ public class ErrorCatchActivity extends AppCompatActivity {
 
     public static ArrayList<ErrorItem> errorList = new ArrayList<>();
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityErrorCatchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        btn_back = binding.errorCatchBtnBack;
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = (Toolbar) binding.errorCatchToolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
+
+        drawerLayout = binding.errorCatchDl;
+
+        btn_menu = binding.errorCatchBtnMenu;
+        btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        // 오른쪽 메뉴 버튼
+        NavigationView navigationView = (NavigationView) binding.errorCatchNv;
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+
+                if (id == R.id.menu_service_execution) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServiceExecutionActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_server_disk) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServerDiskActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_scheduler) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), SchedulerActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_error) {
+                    item.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "현재 페이지입니다.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
             }
         });
 
@@ -178,8 +237,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
             }
         });
 
-        btn_hide = binding.errorCatchBtnHide;
-        btn_hide.setOnClickListener(new View.OnClickListener() {
+        layout_btn_filter = binding.errorCatchBtnHide;
+        layout_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!hideBtnClicked) { // 한번 클릭
@@ -235,5 +294,17 @@ public class ErrorCatchActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "시스템 에러", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    // 뒤로 가기 버튼
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기 버튼 눌렀을 때
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

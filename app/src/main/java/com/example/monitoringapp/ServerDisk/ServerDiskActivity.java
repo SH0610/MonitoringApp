@@ -1,20 +1,31 @@
 package com.example.monitoringapp.ServerDisk;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
 import com.example.monitoringapp.R;
+import com.example.monitoringapp.Scheduler.SchedulerActivity;
+import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
 import com.example.monitoringapp.databinding.ActivityServerDiskBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -25,13 +36,13 @@ public class ServerDiskActivity extends AppCompatActivity {
     public static ArrayList<String> item_serverDisk = new ArrayList<String>();
     public static ArrayList<String> item_serverDiskCode = new ArrayList<String>();
 
-    private Button btn_filter, btn_back;
+    private Button btn_menu, btn_searchDisk;
+    private LinearLayout layout_btn_filter; // 필터 버튼
     private boolean hideBtnClicked = false;
     private TextView server_disk_label;
     private String resultCode = null;
 
     public static ArrayList<ServerDiskItem> serverDiskList = new ArrayList<>(); // 서버 디스크 목록 가져오기 (ip, remark)
-    private Button btn_searchDisk;
 
     public static String sd_AGCD; // 대리점코드
     public static String sd_AGNM; // 대리점이름
@@ -45,6 +56,8 @@ public class ServerDiskActivity extends AppCompatActivity {
     public static String sd_LIMIT_PERCENT; // 하한점
     public static String sd_UPDDT; // 수정일자
     public static String sd_UPDTM; // 수정시간
+
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +88,55 @@ public class ServerDiskActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
+        Toolbar toolbar = (Toolbar) binding.serverDiskToolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
 
-        btn_back = binding.serverDiskBtnBack;
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        drawerLayout = binding.serverDiskDl;
+
+        btn_menu = binding.serverDiskBtnMenu;
+        btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        // 오른쪽 메뉴 버튼
+        NavigationView navigationView = (NavigationView) binding.serverDiskNv;
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+
+                if (id == R.id.menu_service_execution) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServiceExecutionActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_server_disk) {
+                    item.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "현재 페이지입니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.menu_scheduler) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), SchedulerActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_error) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ErrorCatchActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
             }
         });
 
@@ -132,9 +188,10 @@ public class ServerDiskActivity extends AppCompatActivity {
             }
         });
 
-        server_disk_label = findViewById(R.id.server_disk_tv_label);
-        btn_filter = findViewById(R.id.server_disk_btn_hide);
-        btn_filter.setOnClickListener(new View.OnClickListener() {
+        server_disk_label = binding.serverDiskTvLabel;
+
+        layout_btn_filter = binding.serverDiskBtnHide;
+        layout_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!hideBtnClicked) { // 한번 클릭
@@ -151,5 +208,17 @@ public class ServerDiskActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // 뒤로 가기 버튼
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기 버튼 눌렀을 때
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

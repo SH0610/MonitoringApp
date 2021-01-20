@@ -1,19 +1,30 @@
 package com.example.monitoringapp.Scheduler;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
 import com.example.monitoringapp.R;
+import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
+import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
 import com.example.monitoringapp.databinding.ActivitySchedulerBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,7 +37,8 @@ import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
 public class SchedulerActivity extends AppCompatActivity {
 
-    private Button btn_back, btn_hide, btn_searchScheduler;
+    private Button btn_menu, btn_searchScheduler;
+    private LinearLayout layout_btn_filter;
     private Button btn_day, btn_week, btn_month;
     private TextView tv_scheduler_label; // 스케줄러 관리 (제목)
     private TextView tv_start, tv_end, tv_divider;
@@ -41,17 +53,63 @@ public class SchedulerActivity extends AppCompatActivity {
 
     public static ArrayList<SchedulerItem> schedulerList = new ArrayList<>(); // 스케줄러 목록
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySchedulerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        btn_back = binding.schedulerBtnBack;
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        drawerLayout = binding.schedulerDl;
+
+        btn_menu = binding.schedulerBtnMenu;
+        btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        Toolbar toolbar = (Toolbar) binding.schedulerToolbar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
+
+        // 오른쪽 메뉴 버튼
+        NavigationView navigationView = (NavigationView) binding.schedulerNv;
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+
+                if (id == R.id.menu_service_execution) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServiceExecutionActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_server_disk) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServerDiskActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_scheduler) {
+                    item.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "현재 페이지입니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.menu_error) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ErrorCatchActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
             }
         });
 
@@ -228,8 +286,8 @@ public class SchedulerActivity extends AppCompatActivity {
         });
 
         tv_scheduler_label = binding.schedulerTvLabel;
-        btn_hide = binding.schedulerBtnHide;
-        btn_hide.setOnClickListener(new View.OnClickListener() {
+        layout_btn_filter = binding.schedulerBtnHide;
+        layout_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!hideBtnClicked) { // 한번 클릭
@@ -299,5 +357,17 @@ public class SchedulerActivity extends AppCompatActivity {
 
         String returnValue = formatter.format(cal.getTime());
         return returnValue;
+    }
+
+    // 뒤로 가기 버튼
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기 버튼 눌렀을 때
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

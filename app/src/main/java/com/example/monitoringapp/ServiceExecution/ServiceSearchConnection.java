@@ -33,14 +33,7 @@ public class ServiceSearchConnection {
 
         StringBuffer stringBuffer2 = new StringBuffer();
 
-        // 서비스 목록 조회
-//        Log.d("서비스목록조회 TARGET URL : ", sTarget_url);
-
-        //전달 데이터 (json)
-        // {"header":{"TYPE":"01"},"body":[{}]}
-        // {"header":{"TYPE":"02"},"body":{"AGCD":"", "SVCCD":""}}
-//        JSONArray jHArr_send = new JSONArray();
-//        JSONArray jBArr_send = new JSONArray();
+        // 전달 데이터 (json)
         JSONObject jHObj_send2 = new JSONObject();
         JSONObject jBObj_send2 = new JSONObject();
         JSONObject jTObj_send2 = new JSONObject();
@@ -51,12 +44,6 @@ public class ServiceSearchConnection {
 
         try {
             jHObj_send2.put("TYPE", "02");
-//            jHArr_send.put(jHObj_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
-//            jBObj_send.put("mdn", sMdn); 일단 무조건 빼기
-
-//            jBArr_send.put(jBObj_send);
-//            jBObj_send2.put("AGCD", "");
-//            jBObj_send2.put("SVCCD", "");
 
             if (clicked) {
                 // 거래처 선택되면
@@ -71,8 +58,7 @@ public class ServiceSearchConnection {
             }
 
 
-//            jTObj_send.put("header", jHArr_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
-            jTObj_send2.put("header", jHObj_send2); // 이거 하면 {"header":{"TYPE":"01"},"body":[{}]}
+            jTObj_send2.put("header", jHObj_send2); // {"header":{"TYPE":"01"},"body":[{}]}
             jTObj_send2.put("body", jBObj_send2);
 
             sJson = jTObj_send2.toString();
@@ -95,7 +81,7 @@ public class ServiceSearchConnection {
             osw.write(sJson);
             osw.flush();
             System.out.println("osw.write(sJson); : ");
-            // {"header":{"TYPE":"02"},"body":{"AGCD":"","SVCCD":""}}
+
             BufferedReader br = null;
             br = new BufferedReader(new InputStreamReader(conn_Url.getInputStream(), "UTF-8"));
             System.out.println("InputStreamReader ");

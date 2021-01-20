@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_service_execution"
+        android:icon="@drawable/ic_launcher_foreground"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:title="서비스 실행" />
+
+    <item
+        android:id="@+id/menu_server_disk"
+        android:icon="@drawable/ic_launcher_foreground"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:title="서버 디스크" />
+
+    <item
+        android:id="@+id/menu_scheduler"
+        android:icon="@drawable/ic_launcher_foreground"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:title="스케줄러" />
+
+    <item
+        android:id="@+id/menu_error"
+        android:icon="@drawable/ic_launcher_foreground"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:title="이력 조회" />
+
+</menu>

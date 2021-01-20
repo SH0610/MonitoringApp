@@ -1,21 +1,34 @@
 package com.example.monitoringapp.ServiceExecution;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.R;
+import com.example.monitoringapp.Scheduler.SchedulerActivity;
+import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.databinding.ActivityServiceExecutionBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +51,8 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
-    private Button btn_search, btn_hide, btn_back;
+    private Button btn_search, btn_menu; // 조회하기, 상단바 오른쪽 메뉴 버튼
+    private LinearLayout linearLayout; // 필터 버튼
     private TextView tv_accountLabel, tv_serviceLabel;
 
     private ArrayList<String> item_accountSearch = new ArrayList<String>();
@@ -58,6 +72,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     public static String se_UPDDT; // 수정일자
     public static String se_UPDTM; // 수정시간
 
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +81,57 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         binding = ActivityServiceExecutionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        btn_back = binding.serviceExecutionBtnBack;
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = (Toolbar) binding.serviceExecutionToolbar;
+        setSupportActionBar(toolbar);
+
+//        ActionBar actionBar = getSupportActionBar(); androidx에서 X
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
+
+        drawerLayout = binding.serviceExecutionDl;
+
+        btn_menu = binding.serviceExecutionBtnMenu;
+        btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        // 오른쪽 메뉴 버튼
+        NavigationView navigationView = (NavigationView) binding.serviceExecutionNv;
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+                int id = item.getItemId();
+
+                if (id == R.id.menu_service_execution) {
+                    item.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "현재 페이지입니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if (id == R.id.menu_server_disk) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ServerDiskActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_scheduler) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), SchedulerActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (id == R.id.menu_error) {
+                    item.setChecked(false);
+                    Intent intent = new Intent(getApplicationContext(), ErrorCatchActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
             }
         });
 
@@ -100,11 +161,9 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         try {
             jHObj_send.put("TYPE", "01");
-//            jHArr_send.put(jHObj_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
             jBArr_send.put(jBObj_send);
 
-//            jTObj_send.put("header", jHArr_send); // 이거 하면 {"header":[{"TYPE":"01"}],"body":[{}]}
-            jTObj_send.put("header", jHObj_send); // 이거 하면 {"header":{"TYPE":"01"},"body":[{}]}
+            jTObj_send.put("header", jHObj_send);
             jTObj_send.put("body", jBArr_send);
 
             sJson = jTObj_send.toString();
@@ -127,7 +186,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             osw.write(sJson);
             osw.flush();
             System.out.println("osw.write(sJson); : ");
-            // {"header":{"TYPE":"02"},"body":{"AGCD":"","SVCCD":""}}
+
             BufferedReader br = null;
             br = new BufferedReader(new InputStreamReader(conn_Url.getInputStream(), "UTF-8"));
             System.out.println("InputStreamReader ");
@@ -162,7 +221,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
 //            JSONObject object2 = jsonArray2.getJSONObject(1); // body
-            // index 0 : anx, index 1 : apl, index 2:
 
             item_accountSearch.add("전체 보기");
             for (int i = 0; i < jsonArray2.length(); i++) {
@@ -173,19 +231,10 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray2.length(); i++) {
                 item_accountSearchCode.add(jsonArray2.getJSONObject(i).getString("AGCD"));
             }
-
-            System.out.println("jsonarray1 길이 " + jsonArray1.length());
-            System.out.println("jsonarray2 길이 " + jsonArray2.length());
-
-            System.out.println("jsonobject1 길이 " + object1.length());
-//            System.out.println("jsonobject2 길이 " + object2.length());
-
-            String test1 = object1.getString("TYPE");
-            String test2 = object1.getString("RETURNCD");
-
-
-            System.out.println("type : " + test1); // type : 01
-            System.out.println("returncd : " + test2); // returncd : 00
+//            String test1 = object1.getString("TYPE");
+//            String test2 = object1.getString("RETURNCD");
+//            System.out.println("type : " + test1); // type : 01
+//            System.out.println("returncd : " + test2); // returncd : 00
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
@@ -271,8 +320,8 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         tv_accountLabel = binding.serviceExecutionTvLabel1;
         tv_serviceLabel = binding.serviceExecutionTvLabel2;
 
-        btn_hide = binding.serviceExecutionBtnHide;
-        btn_hide.setOnClickListener(new View.OnClickListener() {
+        linearLayout = binding.serviceExecutionBtnHide;
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!hideBtnClicked) { // 한번 클릭
@@ -292,5 +341,17 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // 뒤로 가기 버튼
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기 버튼 눌렀을 때
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
