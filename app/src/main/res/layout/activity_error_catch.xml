@@ -10,6 +10,8 @@
     android:fitsSystemWindows="true"
     tools:context=".ErrorCatch.ErrorCatchActivity" >
 
+    <include layout="@layout/drawer_header" />
+
     <LinearLayout
         android:background="@android:color/white"
         android:orientation="vertical"

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.Login.LoginActivity;
+import com.example.monitoringapp.Main.MainActivity;
 import com.example.monitoringapp.R;
 import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
@@ -46,12 +48,14 @@ import static com.example.monitoringapp.ServiceExecution.ServiceSearchConnection
 
 public class ServiceExecutionActivity extends AppCompatActivity {
 
+    MainActivity mainActivity = (MainActivity) MainActivity._MainActivity;
+
     public static boolean clicked = false;
     private boolean hideBtnClicked = false;
 
     private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
-    private Button btn_search, btn_menu; // 조회하기, 상단바 오른쪽 메뉴 버튼
+    private Button btn_search, btn_menu, btn_logout; // 조회하기, 상단바 오른쪽 메뉴 버튼
     private LinearLayout linearLayout; // 필터 버튼
     private TextView tv_accountLabel, tv_serviceLabel;
 
@@ -132,6 +136,17 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                     finish();
                 }
                 return true;
+            }
+        });
+
+        btn_logout = (Button) navigationView.getHeaderView(0).findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

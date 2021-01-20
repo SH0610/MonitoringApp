@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.Login.LoginActivity;
+import com.example.monitoringapp.Main.MainActivity;
 import com.example.monitoringapp.R;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
@@ -37,7 +39,9 @@ import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
 public class SchedulerActivity extends AppCompatActivity {
 
-    private Button btn_menu, btn_searchScheduler;
+    MainActivity mainActivity = (MainActivity) MainActivity._MainActivity;
+
+    private Button btn_menu, btn_searchScheduler, btn_logout;
     private LinearLayout layout_btn_filter;
     private Button btn_day, btn_week, btn_month;
     private TextView tv_scheduler_label; // 스케줄러 관리 (제목)
@@ -110,6 +114,17 @@ public class SchedulerActivity extends AppCompatActivity {
                     finish();
                 }
                 return true;
+            }
+        });
+
+        btn_logout = (Button) navigationView.getHeaderView(0).findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
