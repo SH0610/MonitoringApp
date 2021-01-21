@@ -11,11 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +30,37 @@ import com.example.monitoringapp.R;
 import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
+import com.example.monitoringapp.ServiceExecution.ServiceSearchConnection;
 import com.example.monitoringapp.databinding.ActivityErrorCatchBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.monitoringapp.BaseActivity.BASE_URL;
 import static com.example.monitoringapp.BaseActivity.getTodayDate;
 
 public class ErrorCatchActivity extends AppCompatActivity {
 
     MainActivity mainActivity = (MainActivity) MainActivity._MainActivity;
+
+    private Spinner spinner1, spinner2;
+
+    public static boolean error_clicked = false;
+    private ArrayList<String> item_accountSearch2 = new ArrayList<String>();
+    private ArrayList<String> item_accountSearchCode2 = new ArrayList<String>();
+
+    StringBuffer stringBuffer = new StringBuffer();
+    private String accountSearchData;
 
     private Button btn_search, btn_menu, btn_logout;
     private LinearLayout layout_btn_filter;
@@ -60,6 +85,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityErrorCatchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
         Toolbar toolbar = (Toolbar) binding.errorCatchToolbar;
         setSupportActionBar(toolbar);
@@ -120,6 +147,7 @@ public class ErrorCatchActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
+                mainActivity.finish();
                 finish();
             }
         });
@@ -258,6 +286,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!hideBtnClicked) { // 한번 클릭
                     hideBtnClicked = true;
+                    spinner1.setVisibility(view.GONE);
+                    spinner2.setVisibility(view.GONE);
                     tv_error_catch_label.setVisibility(view.GONE);
                     tv_start.setVisibility(view.GONE);
                     tv_divider.setVisibility(view.GONE);
@@ -265,6 +295,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     btn_search.setVisibility(view.GONE);
                 } else { // 두번 클릭
                     hideBtnClicked = false;
+                    spinner1.setVisibility(view.VISIBLE);
+                    spinner2.setVisibility(view.VISIBLE);
                     tv_error_catch_label.setVisibility(view.VISIBLE);
                     tv_start.setVisibility(view.VISIBLE);
                     tv_divider.setVisibility(view.VISIBLE);

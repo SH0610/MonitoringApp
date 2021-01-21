@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:background="#E64122"
-    android:padding="16dp"
     android:gravity="bottom">
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:src="@drawable/logo_moeunnet_white" />
 
     <Button
@@ -18,7 +19,7 @@
         android:text="로그아웃"
         android:background="#00ff0000"
         android:textColor="@android:color/white"
-        android:padding="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

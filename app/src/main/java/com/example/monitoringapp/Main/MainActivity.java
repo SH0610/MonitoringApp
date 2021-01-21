@@ -179,4 +179,24 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "건수 조회 / 시스템 에러", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        resultCode = MainConnection.getMainData(date,date);
+
+        if (resultCode.equals("00")) {
+            tv_scheduler.setText(scheduleCnt);
+            tv_error.setText(errorCnt);
+        } else if (resultCode.equals("01")) {
+            tv_scheduler.setText("에러");
+            tv_error.setText("에러");
+            Toast.makeText(getApplicationContext(), "건수 조회 / 입력값 오류", Toast.LENGTH_SHORT).show();
+        } else if (resultCode.equals("99")){
+            tv_scheduler.setText("에러");
+            tv_error.setText("에러");
+            Toast.makeText(getApplicationContext(), "건수 조회 / 시스템 에러", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

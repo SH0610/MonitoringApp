@@ -146,6 +146,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
+                mainActivity.finish();
                 finish();
             }
         });
