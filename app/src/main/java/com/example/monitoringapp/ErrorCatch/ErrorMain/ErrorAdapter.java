@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ErrorCatch;
+package com.example.monitoringapp.ErrorCatch.ErrorMain;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.monitoringapp.ErrorCatch.ErrorInfo.ErrorInfoActivity;
 import com.example.monitoringapp.R;
 
 import java.util.ArrayList;

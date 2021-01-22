@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ErrorCatch;
+package com.example.monitoringapp.ErrorCatch.ErrorMain;
 
 public class ErrorItem {
 //    private String agcd; // 대리점코드

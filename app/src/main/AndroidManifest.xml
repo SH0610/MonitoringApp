@@ -29,10 +29,10 @@
             android:name=".Scheduler.SchedulerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ErrorCatch.ErrorInfoActivity"
+            android:name=".ErrorCatch.ErrorInfo.ErrorInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ErrorCatch.ErrorCatchActivity"
+            android:name=".ErrorCatch.ErrorMain.ErrorCatchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ServerDisk.ServerDiskActivity"

@@ -1,7 +1,6 @@
 package com.example.monitoringapp.ServiceExecution;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity;
 import com.example.monitoringapp.Login.LoginActivity;
 import com.example.monitoringapp.Main.MainActivity;
 import com.example.monitoringapp.R;
@@ -68,13 +67,8 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     private String accountSearchData;
 
     public static String se_AGCD; // 대리점코드
-    public static String se_AGNM; // 대리점이름
 
-    public static String se_SVCCD; // 서비스코드
     public static String se_SVCNM = ""; // 서비스명
-    public static String se_RESULT; // 결과
-    public static String se_UPDDT; // 수정일자
-    public static String se_UPDTM; // 수정시간
 
     private DrawerLayout drawerLayout;
 

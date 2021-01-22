@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ErrorCatch;
+package com.example.monitoringapp.ErrorCatch.ErrorInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.monitoringapp.R;
 import com.example.monitoringapp.databinding.ActivityErrorInfoBinding;
 
-import static com.example.monitoringapp.ErrorCatch.ErrorCatchActivity.errorInfoModified;
+import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.errorInfoModified;
 
 public class ErrorInfoActivity extends AppCompatActivity {
 

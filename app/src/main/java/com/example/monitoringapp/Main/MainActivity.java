@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity;
 import com.example.monitoringapp.Login.LoginActivity;
 import com.example.monitoringapp.R;
 import com.example.monitoringapp.Scheduler.SchedulerActivity;

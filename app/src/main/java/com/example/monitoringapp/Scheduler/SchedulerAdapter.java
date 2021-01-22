@@ -49,7 +49,7 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.View
             holder.status.setText("완료");
             holder.status.setBackgroundColor(Color.parseColor("#BDECB6"));
             holder.status.setTextColor(Color.parseColor("#008000"));
-        } else if (schedulerItem.getStatus().equals("0")) {
+        } else {
             holder.status.setText("미처리");
 
             String realDate = schedulerItem.getReal_date() + schedulerItem.getReal_time();

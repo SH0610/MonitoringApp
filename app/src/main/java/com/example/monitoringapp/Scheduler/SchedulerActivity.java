@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.monitoringapp.ErrorCatch.ErrorCatchActivity;
+import com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity;
 import com.example.monitoringapp.Login.LoginActivity;
 import com.example.monitoringapp.Main.MainActivity;
 import com.example.monitoringapp.R;

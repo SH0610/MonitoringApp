@@ -47,12 +47,12 @@ public class ServiceSearchConnection {
 
             if (clicked) {
                 // 거래처 선택되면
-                System.out.println("거래처 선택ㄴ");
+                System.out.println("거래처 선택완료");
                 jBObj_send2.put("AGCD", "");
                 jBObj_send2.put("SVCCD", "");
 
             } else {
-                System.out.println("거래처 선택완료");
+                System.out.println("거래처 선택ㄴ");
                 jBObj_send2.put("AGCD", AGCD);
                 jBObj_send2.put("SVCCD", "");
             }
@@ -130,12 +130,16 @@ public class ServiceSearchConnection {
                         String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
 
                         String date, time;
-                        if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                        if (jsonArray2.getJSONObject(i).getString("UPDDT").equals("") || jsonArray2.getJSONObject(i).getString("UPDTM").equals("")) {
                             date = "업데이트 정보 없음";
                             time = "";
+                            System.out.println("r개개");
                         } else {
                             forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
                             forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
+
+                            System.out.println("개빡침" + forParsingDate);
+                            System.out.println("개빡침" + forParsingTime);
 
                             parse_year = forParsingDate.substring(0, 4);
                             parse_month = forParsingDate.substring(4, 6);
@@ -207,11 +211,6 @@ public class ServiceSearchConnection {
                     item_serviceSearch.add(jsonArray2.getJSONObject(i).getString("SVCNM"));
                 }
             }
-
-            System.out.println("jsonarray1 길이service " + jsonArray1.length());
-            System.out.println("jsonarray2 길이service " + jsonArray2.length());
-
-            System.out.println("jsonobject1 길이service " + object1.length());
 
         } catch (JSONException e) {
             System.out.println(e);

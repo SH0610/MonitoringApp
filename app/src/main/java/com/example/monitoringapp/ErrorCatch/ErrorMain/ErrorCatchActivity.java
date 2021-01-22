@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ErrorCatch;
+package com.example.monitoringapp.ErrorCatch.ErrorMain;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +30,6 @@ import com.example.monitoringapp.R;
 import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
-import com.example.monitoringapp.ServiceExecution.ServiceSearchConnection;
 import com.example.monitoringapp.databinding.ActivityErrorCatchBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -58,9 +57,14 @@ public class ErrorCatchActivity extends AppCompatActivity {
     public static boolean error_clicked = false;
     private ArrayList<String> item_accountSearch2 = new ArrayList<String>();
     private ArrayList<String> item_accountSearchCode2 = new ArrayList<String>();
+    public static ArrayList<String> item_serviceSearch2 = new ArrayList<String>();
+    public static ArrayList<String> item_ServiceSearchCode2 = new ArrayList<String>();
 
     StringBuffer stringBuffer = new StringBuffer();
     private String accountSearchData;
+
+    public static String ec_AGCD; // 대리점코드
+    public static String ec_SVCNM = ""; // 서비스명
 
     private Button btn_search, btn_menu, btn_logout;
     private LinearLayout layout_btn_filter;
@@ -86,7 +90,162 @@ public class ErrorCatchActivity extends AppCompatActivity {
         binding = ActivityErrorCatchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        item_serviceSearch2.add("전체 보기");
+        item_ServiceSearchCode2.add("전체 보기");
+
         if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+
+        // 거래처 조회
+
+        URL url = null;
+        HttpURLConnection conn_Url = null;
+        String sTarget_url = ""; //호출할 url
+        String sJson = ""; //전달할 json data string
+
+        sTarget_url = BASE_URL; //호출할 url
+
+        Log.d("TARGET URL : ", sTarget_url);
+
+        //전달 데이터 (json)
+        // {"header":{"TYPE":"01"},"body":[{}]}
+        JSONArray jHArr_send = new JSONArray();
+        JSONArray jBArr_send = new JSONArray();
+        JSONObject jHObj_send = new JSONObject();
+        JSONObject jBObj_send = new JSONObject();
+        JSONObject jTObj_send = new JSONObject();
+
+        try {
+            jHObj_send.put("TYPE", "01");
+            jBArr_send.put(jBObj_send);
+
+            jTObj_send.put("header", jHObj_send);
+            jTObj_send.put("body", jBArr_send);
+
+            sJson = jTObj_send.toString();
+            System.out.println(sJson);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            url = new URL(sTarget_url);
+            conn_Url = (HttpURLConnection) url.openConnection();
+            conn_Url.setDoInput(true);
+            conn_Url.setDoOutput(true);
+            conn_Url.setRequestMethod("POST");
+            conn_Url.setRequestProperty("Accept", "application/json");
+            conn_Url.connect();
+
+            OutputStreamWriter osw = new OutputStreamWriter(conn_Url.getOutputStream());
+            osw.write(sJson);
+            osw.flush();
+            System.out.println("osw.write(sJson); : ");
+
+            BufferedReader br = null;
+            br = new BufferedReader(new InputStreamReader(conn_Url.getInputStream(), "UTF-8"));
+            System.out.println("InputStreamReader ");
+            String line = null;
+            String sJson_get = "";
+            while ((line = br.readLine()) != null) {
+                sJson_get = line;
+                System.out.println(line);
+                stringBuffer.append(line);
+            }
+
+            Log.d("RESPONSE", sJson_get);
+            System.out.println("hi" + sJson_get);
+            accountSearchData = stringBuffer.toString();
+
+            System.out.println("받은 데이터 (거래처 조회) : " + accountSearchData);
+
+            // 닫기
+            osw.close();
+            br.close();
+        } catch(Exception ex) {
+            System.out.println(ex.toString());
+        }
+
+        try {
+            // 응답 JSON 파싱
+            JSONObject receiveJSONObject = new JSONObject(accountSearchData);
+            // header : Array
+            JSONArray jsonArray1 = receiveJSONObject.getJSONArray("header");
+            // body : Array
+            JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
+            // TYPE, RETURNCD : Object
+            JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
+//            JSONObject object2 = jsonArray2.getJSONObject(1); // body
+
+            item_accountSearch2.add("전체 보기");
+            for (int i = 0; i < jsonArray2.length(); i++) {
+                item_accountSearch2.add(jsonArray2.getJSONObject(i).getString("AGNM"));
+            }
+
+            item_accountSearchCode2.add("전체 보기");
+            for (int i = 0; i < jsonArray2.length(); i++) {
+                item_accountSearchCode2.add(jsonArray2.getJSONObject(i).getString("AGCD"));
+            }
+        } catch (JSONException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
+        spinner1 = binding.errorCatchSpinner1;
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, item_accountSearch2);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter1);
+
+        ErrorServiceSearchConnection.getServiceSearch(ec_AGCD, ec_SVCNM);
+
+        final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch2);
+        //  아이템이 선택되었을 때의 이벤트 처리 리스너 설정
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (i == 0) {
+                    ec_AGCD = "";
+                }
+                else {
+                    ec_AGCD = item_accountSearchCode2.get(i); // 선택된 대리점 코드
+                }
+                System.out.println("선택된 대리점 코드 : " + ec_AGCD);
+
+                // 서비스 조회 스피너
+                spinner2 = binding.errorCatchSpinner2;
+
+                error_clicked = true;
+                ErrorServiceSearchConnection.getServiceSearch(ec_AGCD, ec_SVCNM);
+
+                adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner2.setAdapter(adapter2);
+
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        if (item_serviceSearch2.get(i).equals("전체 보기")) {
+                            ec_SVCNM = "";
+                        } else {
+                            ec_SVCNM = item_ServiceSearchCode2.get(i);
+                        }
+                        System.out.println("선택된 서비스 : " + ec_SVCNM);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        Toast.makeText(getApplicationContext(), "아이템을 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getApplicationContext(), "아이템을 선택해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Toolbar toolbar = (Toolbar) binding.errorCatchToolbar;
         setSupportActionBar(toolbar);
@@ -255,7 +414,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resultCode = ErrorCatchConnection.getErrorInfo(STARTDT, ENDDT);
+
+                resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCNM, STARTDT, ENDDT);
 
                 final RecyclerView recyclerView = binding.errorRecyclerview;
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -318,7 +478,7 @@ public class ErrorCatchActivity extends AppCompatActivity {
             System.out.println("modify2" + errorInfoModified);
 
             errorInfoModified = false;
-            resultCode = ErrorCatchConnection.getErrorInfo(STARTDT, ENDDT);
+            resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCNM, STARTDT, ENDDT);
 
             final RecyclerView recyclerView = binding.errorRecyclerview;
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

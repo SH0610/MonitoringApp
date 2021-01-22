@@ -1,4 +1,4 @@
-package com.example.monitoringapp.ErrorCatch;
+package com.example.monitoringapp.ErrorCatch.ErrorMain;
 
 import android.util.Log;
 
@@ -13,12 +13,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
+import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.errorList;
+import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.item_serviceSearch2;
 
-public class ErrorInfoConnection {
+public class ErrorCatchConnection {
 
-    private static String errorInfoData;
+    private static String errorData;
 
-    public static String postErrorInfo(String svccd, String seq, String comfg, String com_msg, String updid) {
+    public static String getErrorInfo(String account, String service, String STARTDT, String ENDDT) {
         String resultCode = null;
 
         StringBuffer stringBuffer = new StringBuffer();
@@ -40,16 +42,13 @@ public class ErrorInfoConnection {
 
         try {
             // POST
-
-            // header
-            jHObj_send2.put("TYPE", "06");
+            jHObj_send2.put("TYPE", "05"); // header
 
             // body
-            jBObj_send2.put("SVCCD", svccd);
-            jBObj_send2.put("SEQ", seq);
-            jBObj_send2.put("COMFG", comfg);
-            jBObj_send2.put("COM_MSG", com_msg);
-            jBObj_send2.put("UPDID", updid);
+            jBObj_send2.put("AGCD", account);
+            jBObj_send2.put("SVCCD", service);
+            jBObj_send2.put("STARTDT", STARTDT);
+            jBObj_send2.put("ENDDT", ENDDT);
 
             jTObj_send2.put("header", jHObj_send2); // header
             jTObj_send2.put("body", jBObj_send2); // body
@@ -88,9 +87,9 @@ public class ErrorInfoConnection {
 
             Log.d("RESPONSE", sJson_get);
             System.out.println("hi" + sJson_get);
-            errorInfoData = stringBuffer.toString();
+            errorData = stringBuffer.toString();
 
-            System.out.println("받은 데이터 (에러) 조회) : " + errorInfoData);
+            System.out.println("받은 데이터 (에러) 조회) : " + errorData);
 
             // 닫기
             osw.close();
@@ -101,16 +100,44 @@ public class ErrorInfoConnection {
 
         try {
             // 응답 JSON 파싱
-            JSONObject receiveJSONObject = new JSONObject(errorInfoData);
+            JSONObject receiveJSONObject = new JSONObject(errorData);
             // header : Array
             JSONArray jsonArray1 = receiveJSONObject.getJSONArray("header");
-//            // body : Array
-//            JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
+            // body : Array
+            JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // returncd (header)
+//            JSONObject object2 = jsonArray2.getJSONObject(0); // body
+            JSONObject object2 = null; // body
 
             resultCode = object1.getString("RETURNCD");
             System.out.println("result : " + resultCode);
+
+            errorList.clear();
+            for (int i = 0; i < jsonArray2.length(); i++) {
+                String date = null, time = null; // 실제
+
+                String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec; // 실제
+
+                forParsingDate = jsonArray2.getJSONObject(i).getString("ERRDT");
+                forParsingTime = jsonArray2.getJSONObject(i).getString("ERRTM");
+
+                System.out.println("TEST" + forParsingDate);
+                System.out.println("TEST" + forParsingTime);
+
+                parse_year = forParsingDate.substring(0, 4);
+                parse_month = forParsingDate.substring(4, 6);
+                parse_day = forParsingDate.substring(6, 8);
+
+                parse_hour = forParsingTime.substring(0, 2);
+                parse_min = forParsingTime.substring(2, 4);
+                parse_sec = forParsingTime.substring(4, 6);
+
+                date = parse_year + "-" + parse_month + "-" + parse_day;
+                time = parse_hour + ":" + parse_min + ":" + parse_sec;
+
+                errorList.add(new ErrorItem(jsonArray2.getJSONObject(i).getString("AGNM"), jsonArray2.getJSONObject(i).getString("SVCCD"), jsonArray2.getJSONObject(i).getString("SVCNM"), jsonArray2.getJSONObject(i).getString("SEQ"), jsonArray2.getJSONObject(i).getString("ECD"), jsonArray2.getJSONObject(i).getString("ERR_MSG"), date, time, jsonArray2.getJSONObject(i).getString("COMFG"), jsonArray2.getJSONObject(i).getString("COM_MSG"), jsonArray2.getJSONObject(i).getString("ENTDT"), jsonArray2.getJSONObject(i).getString("ENTTM"), jsonArray2.getJSONObject(i).getString("REPORTDT"), jsonArray2.getJSONObject(i).getString("REPORTTM"), jsonArray2.getJSONObject(i).getString("UPDDT"), jsonArray2.getJSONObject(i).getString("UPDTM")));
+            }
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
