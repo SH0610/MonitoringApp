@@ -15,8 +15,8 @@ import java.net.URL;
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 
 public class MainConnection {
-    private static String mainData;
-    public static String errorCnt, scheduleCnt;
+    private static String mainData; // 서버 통신 후 받은 데이터
+    public static String errorCnt, scheduleCnt; // 에러 건수, 스케줄러 건수
 
     public static String getMainData(String STARTDT, String ENDDT) {
         StringBuffer stringBuffer_sc = new StringBuffer();
@@ -105,7 +105,6 @@ public class MainConnection {
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
 
             resultCode = object1.getString("RETURNCD"); // 응답코드
-
 
             errorCnt = jsonArray2.getJSONObject(0).getString("HISTORY_CNT");
             scheduleCnt = jsonArray2.getJSONObject(0).getString("SCHEDULE_CNT");

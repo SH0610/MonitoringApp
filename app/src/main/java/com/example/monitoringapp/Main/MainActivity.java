@@ -33,15 +33,13 @@ import static com.example.monitoringapp.Main.MainConnection.scheduleCnt;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
+    public static Activity _MainActivity;
     private Button btn_service, btn_disk, btn_scheduler, btn_error;
     private Button btn_menu, btn_logout;
     private TextView tv_name, tv_id, tv_scheduler, tv_error;
-    ActivityMainBinding binding;
-    private String date, resultCode = null;
-
+    private String date, resultCode = null; // 오늘 날짜, 응답 코드
     private DrawerLayout drawerLayout;
-
-    public static Activity _MainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) binding.mainToolbar;
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowCustomEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_back);
 
         drawerLayout = binding.mainDl;
 
@@ -164,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         date = getTodayDate();
 
+        // 오늘에 해당하는 데이터만 가져오기 때문에 같은 날짜를 보낸다.
         resultCode = MainConnection.getMainData(date,date);
 
         if (resultCode.equals("00")) {

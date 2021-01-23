@@ -107,7 +107,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
         Log.d("TARGET URL : ", sTarget_url);
 
         //전달 데이터 (json)
-        // {"header":{"TYPE":"01"},"body":[{}]}
         JSONArray jHArr_send = new JSONArray();
         JSONArray jBArr_send = new JSONArray();
         JSONObject jHObj_send = new JSONObject();
@@ -175,7 +174,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(1); // body
 
             item_accountSearch2.add("전체 보기");
             for (int i = 0; i < jsonArray2.length(); i++) {

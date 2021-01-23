@@ -104,9 +104,6 @@ public class ErrorInfoConnection {
             JSONObject receiveJSONObject = new JSONObject(errorInfoData);
             // header : Array
             JSONArray jsonArray1 = receiveJSONObject.getJSONArray("header");
-//            // body : Array
-//            JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
-            // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // returncd (header)
 
             resultCode = object1.getString("RETURNCD");

@@ -193,7 +193,7 @@ public class ServiceSearchConnection {
                             date = parse_year + "-" + parse_month + "-" + parse_day;
                             time = parse_hour + ":" + parse_min + ":" + parse_sec;
                         }
-                        if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                        if (jsonArray2.getJSONObject(i).getString("UPDDT").equals("") || jsonArray2.getJSONObject(i).getString("UPDTM").equals("")) {
                             date = "정보 없음";
                             time = "정보 없음";
                         }

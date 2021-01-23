@@ -132,17 +132,16 @@
                 android:layout_toRightOf="@+id/error_info_label_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@android:color/black"
                 tools:text="오류가 발생하였습니다." />
 
             <LinearLayout
                 android:id="@+id/error_info_label_linearlayout"
-                android:layout_marginTop="40dp"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/error_info_label_msg"
+                android:layout_below="@+id/error_info_tv_msg"
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal" >
 

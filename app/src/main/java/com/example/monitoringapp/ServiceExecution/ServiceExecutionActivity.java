@@ -49,25 +49,22 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     MainActivity mainActivity = (MainActivity) MainActivity._MainActivity;
 
-    public static boolean clicked = false;
-    private boolean hideBtnClicked = false;
-
-    private Spinner spinner1, spinner2;
     private ActivityServiceExecutionBinding binding;
+    public static boolean clicked = false; // ServiceSearchConnection에서 거래처가 선택되었는지 확인하기 위한 변수
+    private boolean hideBtnClicked = false; //
+    private Spinner spinner1, spinner2;
     private Button btn_search, btn_menu, btn_logout; // 조회하기, 상단바 오른쪽 메뉴 버튼
     private LinearLayout linearLayout; // 필터 버튼
     private TextView tv_accountLabel, tv_serviceLabel;
 
-    private ArrayList<String> item_accountSearch = new ArrayList<String>();
-    public static ArrayList<String> item_serviceSearch = new ArrayList<String>();
-
-    private ArrayList<String> item_accountSearchCode = new ArrayList<String>();
+    private ArrayList<String> item_accountSearch = new ArrayList<String>(); // 거래처 목록
+    public static ArrayList<String> item_serviceSearch = new ArrayList<String>(); // 서비스 목록 (ServiceSearchConnection에서 받아옴)
+    private ArrayList<String> item_accountSearchCode = new ArrayList<String>(); // 서비스 코드 목록
 
     StringBuffer stringBuffer = new StringBuffer();
     private String accountSearchData;
 
     public static String se_AGCD; // 대리점코드
-
     public static String se_SVCNM = ""; // 서비스명
 
     private DrawerLayout drawerLayout;
@@ -145,7 +142,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             }
         });
 
-        item_serviceSearch.add("전체 보기");
+        item_serviceSearch.add("전체 보기"); // 스피너에 보여주고, 개수를 맞춰주기 위해 추가
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
@@ -230,7 +227,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(1); // body
 
             item_accountSearch.add("전체 보기");
             for (int i = 0; i < jsonArray2.length(); i++) {
@@ -241,10 +237,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             for (int i = 0; i < jsonArray2.length(); i++) {
                 item_accountSearchCode.add(jsonArray2.getJSONObject(i).getString("AGCD"));
             }
-//            String test1 = object1.getString("TYPE");
-//            String test2 = object1.getString("RETURNCD");
-//            System.out.println("type : " + test1); // type : 01
-//            System.out.println("returncd : " + test2); // returncd : 00
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();
