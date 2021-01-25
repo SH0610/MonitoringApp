@@ -91,4 +91,12 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+    <CheckBox
+        android:id="@+id/login_btn_save"
+        android:layout_below="@+id/login_btn"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인 정보 기억하기" />
+
 </RelativeLayout>

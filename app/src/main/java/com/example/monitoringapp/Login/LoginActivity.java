@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     private Button btn_login;
     private EditText et_id, et_pw;
+    private CheckBox cb_save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,27 @@ public class LoginActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
 
+
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+//        SharedPreferences setting = getSharedPreferences("setting", 0);
+//        final SharedPreferences.Editor editor_login = setting.edit();
+
+        cb_save = binding.loginBtnSave;
+        cb_save.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    editor.putBoolean("Auto_Login_enabled", true);
+                    editor.apply();
+                } else {
+                    editor.putBoolean("Auto_Login_enabled", false);
+                    editor.apply();
+                }
+            }
+        });
+
         btn_login = binding.loginBtn;
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +67,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 String resultCode = LoginConnection.getLogin(et_id.getText().toString(), et_pw.getText().toString());
                 if (resultCode.equals("00")) { // 정상
-                    SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("id", login_id);
                     editor.putString("name", login_name);
+//                    editor.putString("pw", et_pw.getText().toString());
+
                     editor.apply(); // 아이디 저장
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
