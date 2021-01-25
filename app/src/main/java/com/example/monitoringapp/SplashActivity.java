@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.example.monitoringapp.Login.LoginActivity;
 import com.example.monitoringapp.Main.MainActivity;
-import com.example.monitoringapp.Main.MainConnection;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,14 +16,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
 
-        if (sharedPreferences.getBoolean("Auto_Login_enabled", true)) { // 자동 로그인 체크되어서 아이디가 저장되어있으면 바로 메인으로
+        if (sharedPreferences.getBoolean("Auto_Login_enabled", false)) { // 자동 로그인 체크되어서 아이디가 저장되어있으면 바로 메인으로
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();

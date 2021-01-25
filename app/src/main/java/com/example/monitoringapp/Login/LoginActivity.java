@@ -35,45 +35,42 @@ public class LoginActivity extends AppCompatActivity {
         et_id = binding.loginEtId;
         et_pw = binding.loginEtPassword;
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-
+        // 로그인 정보를 저장하기 위한 SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-//        SharedPreferences setting = getSharedPreferences("setting", 0);
-//        final SharedPreferences.Editor editor_login = setting.edit();
-
+        // 체크박스
         cb_save = binding.loginBtnSave;
         cb_save.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
+                if (b) { // 자동 로그인 O
                     editor.putBoolean("Auto_Login_enabled", true);
                     editor.apply();
-                } else {
+                } else { // 자동 로그인 X
                     editor.putBoolean("Auto_Login_enabled", false);
                     editor.apply();
                 }
             }
         });
 
+        // 로그인 버튼
         btn_login = binding.loginBtn;
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println(et_id.getText().toString() + "비번" + et_pw.getText().toString());
 
+                // 버튼 누르면 서버와 통신하고, resultCode 받아온다.
                 String resultCode = LoginConnection.getLogin(et_id.getText().toString(), et_pw.getText().toString());
-                if (resultCode.equals("00")) { // 정상
-//                    SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("id", login_id);
-                    editor.putString("name", login_name);
-//                    editor.putString("pw", et_pw.getText().toString());
 
-                    editor.apply(); // 아이디 저장
+                if (resultCode.equals("00")) { // 정상
+                    editor.putString("id", login_id); // 아이디 저장
+                    editor.putString("name", login_name); // 이름 저장
+                    editor.apply();
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);

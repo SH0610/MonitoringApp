@@ -107,7 +107,6 @@ public class ErrorCatchConnection {
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
             // TYPE, RETURNCD : Object
             JSONObject object1 = jsonArray1.getJSONObject(0); // returncd (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(0); // body
             JSONObject object2 = null; // body
 
             resultCode = object1.getString("RETURNCD");

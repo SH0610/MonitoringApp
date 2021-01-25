@@ -19,7 +19,6 @@ public class ServerDiskConnection {
 
     private static String serverDiskData;
 
-
     public static String getServerDisk(String AGCD) {
         String resultCode = null;
 
@@ -110,7 +109,7 @@ public class ServerDiskConnection {
                 String forParsingDate, forParsingTime, parse_year, parse_month, parse_day, parse_hour, parse_min, parse_sec;
 
                 String date, time;
-                if (jsonArray2.getJSONObject(i).getString("UPDDT") == "" || jsonArray2.getJSONObject(i).getString("UPDTM") == "") {
+                if (jsonArray2.getJSONObject(i).getString("UPDDT").equals("") || jsonArray2.getJSONObject(i).getString("UPDTM").equals("")) {
                     date = "업데이트 정보 없음";
                     time = "";
                 } else {

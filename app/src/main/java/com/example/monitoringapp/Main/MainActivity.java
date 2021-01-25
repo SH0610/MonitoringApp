@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         _MainActivity = MainActivity.this;
 
-        if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Toolbar toolbar = (Toolbar) binding.mainToolbar;
         setSupportActionBar(toolbar);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.END);
+                drawerLayout.openDrawer(GravityCompat.END); // 오른쪽에서 메뉴 나오도록 함
             }
         });
 

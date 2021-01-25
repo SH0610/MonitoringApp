@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
     private ArrayList<String> item_accountSearch = new ArrayList<String>(); // 거래처 목록
     public static ArrayList<String> item_serviceSearch = new ArrayList<String>(); // 서비스 목록 (ServiceSearchConnection에서 받아옴)
-    private ArrayList<String> item_accountSearchCode = new ArrayList<String>(); // 서비스 코드 목록
+    private ArrayList<String> item_accountSearchCode = new ArrayList<String>(); // 대리점 코드 목록
 
     StringBuffer stringBuffer = new StringBuffer();
     private String accountSearchData;
@@ -86,6 +87,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         drawerLayout = binding.serviceExecutionDl;
 
+        // 상단 햄버거 메뉴 버튼
         btn_menu = binding.serviceExecutionBtnMenu;
         btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +96,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             }
         });
 
-        // 오른쪽 메뉴 버튼
+        // 오른쪽 메뉴 상세 버튼
         NavigationView navigationView = (NavigationView) binding.serviceExecutionNv;
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -134,6 +136,12 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("LoginInfo", MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("Auto_Login_enabled", false);
+                editor.apply();
+
                 Toast.makeText(getApplicationContext(), "로그아웃되었습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
@@ -144,11 +152,10 @@ public class ServiceExecutionActivity extends AppCompatActivity {
 
         item_serviceSearch.add("전체 보기"); // 스피너에 보여주고, 개수를 맞춰주기 위해 추가
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // 거래처 조회
-
         URL url = null;
         HttpURLConnection conn_Url = null;
         String sTarget_url = ""; //호출할 url
@@ -248,9 +255,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
 
-        ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
-
-
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch);
         //  아이템이 선택되었을 때의 이벤트 처리 리스너 설정
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -258,7 +262,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (i == 0) {
-                    se_AGCD = "";
+                    se_AGCD = ""; // 전체보기
                 }
                 else {
                     se_AGCD = item_accountSearchCode.get(i); // 선택된 대리점 코드
@@ -278,7 +282,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if (item_serviceSearch.get(i) == "전체 보기") {
+                        if (item_serviceSearch.get(i).equals("전체 보기")) {
                             se_SVCNM = "";
                         } else {
                             se_SVCNM = item_serviceSearch.get(i);
@@ -299,7 +303,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
             }
         });
 
-        // 7. 리사이클러뷰 가져오기
         final RecyclerView recyclerView = binding.serviceExecutionRecyclerview;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -308,32 +311,36 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicked = false;
+                clicked = false; // 거래처 선택되었을 경우
 
                 System.out.println("버튼 클릭 시의 AGCD : " + se_AGCD);
                 ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
                 ServiceAdapter serviceAdapter = new ServiceAdapter(dataList);
                 recyclerView.setAdapter(serviceAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();
+
+                if (dataList.isEmpty()) { // 데이터가 없을 경우
+                    Toast.makeText(getApplicationContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
         tv_accountLabel = binding.serviceExecutionTvLabel1;
         tv_serviceLabel = binding.serviceExecutionTvLabel2;
 
+        // 필터 버튼 클릭 시
         linearLayout = binding.serviceExecutionBtnHide;
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!hideBtnClicked) { // 한번 클릭
+                if (!hideBtnClicked) { // 한번 클릭 (사라짐)
                     hideBtnClicked = true;
                     spinner1.setVisibility(view.GONE);
                     spinner2.setVisibility(view.GONE);
                     tv_accountLabel.setVisibility(view.GONE);
                     tv_serviceLabel.setVisibility(view.GONE);
                     btn_search.setVisibility(view.GONE);
-                } else { // 두번 클릭
+                } else { // 두번 클릭 (보여짐)
                     hideBtnClicked = false;
                     spinner1.setVisibility(view.VISIBLE);
                     spinner2.setVisibility(view.VISIBLE);
@@ -349,7 +356,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:{ // 뒤로가기 버튼 눌렀을 때
+            case android.R.id.home:{ // 뒤로가기 버튼 누르면 메인으로 이동하고 현재 액티비티 종료
                 finish();
                 return true;
             }

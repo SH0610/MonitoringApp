@@ -46,17 +46,15 @@ public class ServiceSearchConnection {
             jHObj_send2.put("TYPE", "02");
 
             if (clicked) {
-                // 거래처 선택되면
-                System.out.println("거래처 선택완료");
+                // 초기 상태 또는 거래처 선택되었지만, 조회 버튼은 클릭이 안된 상태
                 jBObj_send2.put("AGCD", "");
                 jBObj_send2.put("SVCCD", "");
 
             } else {
-                System.out.println("거래처 선택ㄴ");
+                // 거래처 선택되었을 경우
                 jBObj_send2.put("AGCD", AGCD);
                 jBObj_send2.put("SVCCD", "");
             }
-
 
             jTObj_send2.put("header", jHObj_send2); // {"header":{"TYPE":"01"},"body":[{}]}
             jTObj_send2.put("body", jBObj_send2);
@@ -113,17 +111,11 @@ public class ServiceSearchConnection {
             JSONArray jsonArray1 = receiveJSONObject.getJSONArray("header");
             // body : Array
             JSONArray jsonArray2 = receiveJSONObject.getJSONArray("body");
-            // TYPE, RETURNCD : Object
-            JSONObject object1 = jsonArray1.getJSONObject(0); // TYpe (header)
-//            JSONObject object2 = jsonArray2.getJSONObject(0); // body
-            JSONObject object2 = null; // body
 
-            if (jsonArray2.length() == 0) {
+            if (jsonArray2.length() == 0) { // 서비스가 없을 경우
                 dataList.clear();
-                dataList.add(new ServiceItem("", "", "", "서비스가 없습니다.", ""));
             }
             else {
-                object2 = jsonArray2.getJSONObject(0); // body
                 dataList.clear();
                 for (int i = 0; i < jsonArray2.length(); i++) {
                     if (jsonArray2.getJSONObject(i).getString("SVCNM").equals(SVCNM)) { // 서비스 필터링
@@ -137,9 +129,6 @@ public class ServiceSearchConnection {
                         } else {
                             forParsingDate = jsonArray2.getJSONObject(i).getString("UPDDT");
                             forParsingTime = jsonArray2.getJSONObject(i).getString("UPDTM");
-
-                            System.out.println("개빡침" + forParsingDate);
-                            System.out.println("개빡침" + forParsingTime);
 
                             parse_year = forParsingDate.substring(0, 4);
                             parse_month = forParsingDate.substring(4, 6);
@@ -201,7 +190,6 @@ public class ServiceSearchConnection {
                     }
                 }
             }
-
 
             item_serviceSearch.clear();
             item_serviceSearch.add("전체 보기");

@@ -17,13 +17,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
     private final ArrayList<ServiceItem> mDataList;
 
-    // 3. 외부에서 데이터를 받을 수 있게 constructor 생성
-    // 4. 아이템 정의하기
+    // 외부에서 데이터를 받을 수 있게 constructor 생성하고 아이템 정의하기
     public ServiceAdapter(ArrayList<ServiceItem> mDataList) {
         this.mDataList = mDataList;
     }
 
-    // 2. 뷰홀더를 만드는 부분 (뷰 얻기)
     @NonNull
     @Override
     public ServiceAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,8 +32,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ServiceAdapter.ViewHolder holder, int position) {
-        // 위의 뷰홀더에서 리턴을 해주면, 뷰홀더가 들어와서 데이터를 바인딩해주는 부분
-        // 6. 데이터 세팅
+        // 위의 뷰홀더에서 리턴을 해주면, 뷰홀더가 들어와서 데이터를 바인딩해주는 부분 (데이터 세팅)
         ServiceItem serviceItem = mDataList.get(position);
 
         // holder에 데이터 넣기
@@ -56,11 +53,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        // 5. 어댑터가 갖는 아이템의 갯수 지정
+        // 어댑터가 갖는 아이템의 갯수 지정
         return mDataList.size();
     }
 
-    // 1. 제일 먼저 뷰홀더 만들기
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView date, time, account, service, status;

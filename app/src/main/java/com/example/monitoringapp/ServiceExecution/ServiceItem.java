@@ -1,8 +1,7 @@
 package com.example.monitoringapp.ServiceExecution;
 
 public class ServiceItem {
-    // 4. 아이템 정의
-    // 데이터 클래스 생성
+    // 아이템 정의 (데이터 클래스 생성)
     private String date;
     private String time;
     private String account;

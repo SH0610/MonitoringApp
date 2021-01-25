@@ -131,15 +131,6 @@ public class ErrorServiceSearchConnection {
                     item_ServiceSearchCode2.add(jsonArray2.getJSONObject(i).getString("SVCCD"));
                 }
             }
-
-//            item_ServiceSearchCode2.clear();
-//            item_ServiceSearchCode2.add("전체 보기");
-//            for (int i = 0; i < jsonArray2.length(); i++) {
-//                if (jsonArray2.getJSONObject(i).getString("SVCCD").equals(ec_SVCNM)) {
-//                    System.out.println("testok  " + jsonArray2.getJSONObject(i).getString("SVCCD"));
-//                    item_ServiceSearchCode2.add(jsonArray2.getJSONObject(i).getString("SVCCD"));
-//                }
-//            }
         } catch (JSONException e) {
             System.out.println(e);
             e.printStackTrace();

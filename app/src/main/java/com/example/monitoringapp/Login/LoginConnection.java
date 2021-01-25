@@ -11,14 +11,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 
 public class LoginConnection {
 
     private static String loginData;
-//    public static ArrayList<LoginInfoItem> loginInfoList = new ArrayList<>();
     public static String login_id, login_name;
 
     public static String getLogin(String id, String pw) {
@@ -44,7 +42,6 @@ public class LoginConnection {
 
         try {
             // POST
-
             // header
             jHObj_send2.put("TYPE", "07");
 
