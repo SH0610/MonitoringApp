@@ -79,25 +79,21 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     Intent intent = new Intent(getApplicationContext(), ServiceExecutionActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 else if (id == R.id.menu_server_disk) {
                     item.setChecked(false);
                     Intent intent = new Intent(getApplicationContext(), ServerDiskActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 else if (id == R.id.menu_scheduler) {
                     item.setChecked(false);
                     Intent intent = new Intent(getApplicationContext(), SchedulerActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 else if (id == R.id.menu_error) {
                     item.setChecked(false);
                     Intent intent = new Intent(getApplicationContext(), ErrorCatchActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 return true;
             }

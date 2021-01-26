@@ -31,6 +31,7 @@ import com.example.monitoringapp.R;
 import com.example.monitoringapp.Scheduler.SchedulerActivity;
 import com.example.monitoringapp.ServerDisk.ServerDiskActivity;
 import com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity;
+import com.example.monitoringapp.ServiceExecution.ServiceSearchConnection;
 import com.example.monitoringapp.databinding.ActivityErrorCatchBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -65,12 +66,12 @@ public class ErrorCatchActivity extends AppCompatActivity {
     private String accountSearchData;
 
     public static String ec_AGCD; // 대리점코드
-    public static String ec_SVCNM = ""; // 서비스명
+    public static String ec_SVCCD = ""; // 서비스명
 
     private Button btn_search, btn_menu, btn_logout;
     private LinearLayout layout_btn_filter;
     private TextView tv_error_catch_label; // 오류 처리 결과 (제목)
-    private TextView tv_start, tv_end, tv_divider;
+    private TextView tv_start, tv_end, tv_divider, tv_accountLabel, tv_serviceLabel;
     private boolean hideBtnClicked = false;
     public static boolean errorInfoModified = false;
     ActivityErrorCatchBinding binding;
@@ -94,7 +95,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
         item_serviceSearch2.add("전체 보기");
         item_ServiceSearchCode2.add("전체 보기");
 
-        if (android.os.Build.VERSION.SDK_INT > 9) { StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // 거래처 조회
 
@@ -196,8 +198,6 @@ public class ErrorCatchActivity extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
 
-        ErrorServiceSearchConnection.getServiceSearch(ec_AGCD, ec_SVCNM);
-
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, item_serviceSearch2);
         //  아이템이 선택되었을 때의 이벤트 처리 리스너 설정
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -215,8 +215,7 @@ public class ErrorCatchActivity extends AppCompatActivity {
                 // 서비스 조회 스피너
                 spinner2 = binding.errorCatchSpinner2;
 
-                error_clicked = true;
-                ErrorServiceSearchConnection.getServiceSearch(ec_AGCD, ec_SVCNM);
+                ServiceSearchConnection.getService(ec_AGCD);
 
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner2.setAdapter(adapter2);
@@ -226,11 +225,11 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                         if (item_serviceSearch2.get(i).equals("전체 보기")) {
-                            ec_SVCNM = "";
+                            ec_SVCCD = "";
                         } else {
-                            ec_SVCNM = item_ServiceSearchCode2.get(i);
+                            ec_SVCCD = item_ServiceSearchCode2.get(i);
                         }
-                        System.out.println("선택된 서비스 : " + ec_SVCNM);
+                        System.out.println("선택된 서비스 코드 : " + ec_SVCCD);
                     }
 
                     @Override
@@ -420,7 +419,7 @@ public class ErrorCatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCNM, STARTDT, ENDDT);
+                resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCCD, STARTDT, ENDDT);
 
                 final RecyclerView recyclerView = binding.errorRecyclerview;
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -445,6 +444,9 @@ public class ErrorCatchActivity extends AppCompatActivity {
             }
         });
 
+        tv_accountLabel = binding.errorCatchTvLabel1;
+        tv_serviceLabel = binding.errorCatchTvLabel2;
+
         layout_btn_filter = binding.errorCatchBtnHide;
         layout_btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -454,6 +456,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     spinner1.setVisibility(view.GONE);
                     spinner2.setVisibility(view.GONE);
                     tv_error_catch_label.setVisibility(view.GONE);
+                    tv_accountLabel.setVisibility(view.GONE);
+                    tv_serviceLabel.setVisibility(view.GONE);
                     tv_start.setVisibility(view.GONE);
                     tv_divider.setVisibility(view.GONE);
                     tv_end.setVisibility(view.GONE);
@@ -463,6 +467,8 @@ public class ErrorCatchActivity extends AppCompatActivity {
                     spinner1.setVisibility(view.VISIBLE);
                     spinner2.setVisibility(view.VISIBLE);
                     tv_error_catch_label.setVisibility(view.VISIBLE);
+                    tv_accountLabel.setVisibility(view.VISIBLE);
+                    tv_serviceLabel.setVisibility(view.VISIBLE);
                     tv_start.setVisibility(view.VISIBLE);
                     tv_divider.setVisibility(view.VISIBLE);
                     tv_end.setVisibility(view.VISIBLE);
@@ -483,7 +489,7 @@ public class ErrorCatchActivity extends AppCompatActivity {
             System.out.println("modify2" + errorInfoModified);
 
             errorInfoModified = false;
-            resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCNM, STARTDT, ENDDT);
+            resultCode = ErrorCatchConnection.getErrorInfo(ec_AGCD, ec_SVCCD, STARTDT, ENDDT);
 
             final RecyclerView recyclerView = binding.errorRecyclerview;
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());

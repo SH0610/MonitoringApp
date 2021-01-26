@@ -51,7 +51,6 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     MainActivity mainActivity = (MainActivity) MainActivity._MainActivity;
 
     private ActivityServiceExecutionBinding binding;
-    public static boolean clicked = false; // ServiceSearchConnection에서 거래처가 선택되었는지 확인하기 위한 변수
     private boolean hideBtnClicked = false; //
     private Spinner spinner1, spinner2;
     private Button btn_search, btn_menu, btn_logout; // 조회하기, 상단바 오른쪽 메뉴 버튼
@@ -59,14 +58,18 @@ public class ServiceExecutionActivity extends AppCompatActivity {
     private TextView tv_accountLabel, tv_serviceLabel;
 
     private ArrayList<String> item_accountSearch = new ArrayList<String>(); // 거래처 목록
-    public static ArrayList<String> item_serviceSearch = new ArrayList<String>(); // 서비스 목록 (ServiceSearchConnection에서 받아옴)
     private ArrayList<String> item_accountSearchCode = new ArrayList<String>(); // 대리점 코드 목록
+
+    public static ArrayList<String> item_serviceSearch = new ArrayList<String>(); // 서비스 목록 (ServiceSearchConnection에서 받아옴)
+    public static ArrayList<String> item_serviceSearchCode = new ArrayList<String>(); // 서비스 코드 목록 (ServiceSearchConnection에서 받아옴)
+
+    public static ArrayList<String> item_searchResult = new ArrayList<String>(); // 결과
 
     StringBuffer stringBuffer = new StringBuffer();
     private String accountSearchData;
 
     public static String se_AGCD; // 대리점코드
-    public static String se_SVCNM = ""; // 서비스명
+    public static String se_SVCCD = ""; // 서비스명
 
     private DrawerLayout drawerLayout;
 
@@ -272,8 +275,7 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                 // 서비스 조회 스피너
                 spinner2 = binding.serviceExecutionSpinner2;
 
-                clicked = true;
-                ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
+                ServiceSearchConnection.getService(se_AGCD);
 
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner2.setAdapter(adapter2);
@@ -283,11 +285,11 @@ public class ServiceExecutionActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                         if (item_serviceSearch.get(i).equals("전체 보기")) {
-                            se_SVCNM = "";
+                            se_SVCCD = "";
                         } else {
-                            se_SVCNM = item_serviceSearch.get(i);
+                            se_SVCCD = item_serviceSearchCode.get(i);
                         }
-                        System.out.println("선택된 서비스 : " + se_SVCNM);
+                        System.out.println("선택된 서비스 코드 : " + se_SVCCD);
                     }
 
                     @Override
@@ -311,10 +313,9 @@ public class ServiceExecutionActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicked = false; // 거래처 선택되었을 경우
 
                 System.out.println("버튼 클릭 시의 AGCD : " + se_AGCD);
-                ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCNM);
+                ServiceSearchConnection.getServiceSearch(se_AGCD, se_SVCCD);
                 ServiceAdapter serviceAdapter = new ServiceAdapter(dataList);
                 recyclerView.setAdapter(serviceAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();

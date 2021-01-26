@@ -13,11 +13,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
-import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.ec_SVCNM;
+import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.ec_SVCCD;
 import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.error_clicked;
 import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.item_ServiceSearchCode2;
 import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.item_serviceSearch2;
-import static com.example.monitoringapp.ServiceExecution.ServiceExecutionActivity.clicked;
 
 public class ErrorServiceSearchConnection {
 
@@ -48,7 +47,6 @@ public class ErrorServiceSearchConnection {
 
             if (error_clicked) {
                 // 거래처 선택되면
-                clicked = false;
                 error_clicked = false;
                 System.out.println("거래처 선택완료");
                 jBObj_send2.put("AGCD", "");

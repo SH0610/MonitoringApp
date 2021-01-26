@@ -90,8 +90,8 @@ public class ServerDiskActivity extends AppCompatActivity {
         item_serverDiskCode.add("WEL");
         item_serverDiskCode.add("거래처를 선택해주세요.");
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy); }
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Toolbar toolbar = (Toolbar) binding.serverDiskToolbar;
         setSupportActionBar(toolbar);
