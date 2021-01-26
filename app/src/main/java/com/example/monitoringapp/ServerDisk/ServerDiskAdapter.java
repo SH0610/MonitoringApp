@@ -32,6 +32,7 @@ public class ServerDiskAdapter extends RecyclerView.Adapter<ServerDiskAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServerDiskItem serverDiskItem = mDataList.get(position);
 
+        // UsagePercent를 String으로 받아오기 때문에 int로 변환해주어야함
         int value = Integer.parseInt(serverDiskItem.getUsagePercent());
 
         holder.ip.setText(serverDiskItem.getIp());

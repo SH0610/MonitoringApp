@@ -165,6 +165,7 @@ public class ServerDiskActivity extends AppCompatActivity {
 
         spinner = binding.serverDiskSpinner;
 
+        // 스피너에 힌트를 추가하기 위해 따로 ServerDiskSpinnerAdapter를 생성한다.
         ServerDiskSpinnerAdapter serverDiskSpinnerAdapter = new ServerDiskSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, item_serverDisk);
         serverDiskSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(serverDiskSpinnerAdapter);

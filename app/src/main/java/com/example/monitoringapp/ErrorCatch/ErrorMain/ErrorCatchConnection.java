@@ -14,7 +14,6 @@ import java.net.URL;
 
 import static com.example.monitoringapp.BaseActivity.BASE_URL;
 import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.errorList;
-import static com.example.monitoringapp.ErrorCatch.ErrorMain.ErrorCatchActivity.item_serviceSearch2;
 
 public class ErrorCatchConnection {
 
